@@ -36,6 +36,6 @@ init_list = vector(mode="list", length = 17)
 
 
 for (i in seq.int(1,ncol(summary_test))){
-  col_list <- list(names(summary_test)[i],summary_test[1,i][[1]],'test_description')
+  col_list <- list(names(summary_test)[i],summary_test[1,i][[1]],description_df[1,i])
   init_list[[i]] <- col_list
 }

@@ -10,8 +10,8 @@ build_collection <- function(id,
                              summaries = NULL,
                              description = NULL,
                              item_assets = NULL,
-                             tables = NULL,
-                             extensions = NULL,
+                             table_columns,
+                             #extensions = NULL,
                              publications = NULL) {
 
   collection_list <- list(id = id,
@@ -26,17 +26,13 @@ build_collection <- function(id,
                           summaries = summaries,
                           description = description,
                           item_assets = item_assets,
-                          region = "eastus",
                           stac_version = '1.0.0',
-                          tables = tables,
+                          table_columns = tables, ##need to use table:columns but syntax confused R...fix later
                           group_id = 'FLARE_forecast_id', ##just a placeholder for now
-                          #container = 'container_name', ##placeholder
-                          stac_extensions = list(0 = "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
-                                                 1 = "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
-                                                 2 = 	"https://stac-extensions.github.io/table/v1.2.0/schema.json"),
+                          stac_extensions = list('0' = "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+                                                 '1' = "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+                                                 '2' = 	"https://stac-extensions.github.io/table/v1.2.0/schema.json"),
                           publications = publications
-                          #storage_account = 'account_name', #placeholder
-                          #short_description = "description"
   )
 
   return(collection_list)
@@ -123,11 +119,17 @@ build_item_assets <- function(){
 }
 
 
-build_table_columns <- function(){
+build_table_columns <- function(parquet_table,description_df){
 
-  test_list <- list()
+  init_list = vector(mode="list", length = ncol(parquet_table))
 
-  return(test_list)
+
+  for (i in seq.int(1,ncol(summary_test))){
+    col_list <- list(names(summary_test)[i],summary_test[1,i][[1]],description_df[1,i])
+    init_list[[i]] <- col_list
+  }
+
+  return(init_list)
 }
 
 build_stac_extensions <- function(){
@@ -137,11 +139,13 @@ build_stac_extensions <- function(){
   return(test_list)
 }
 
-build_publications <- function(){
+build_publications <- function(doi,authors){
 
-  test_list <- list()
+  pub_list <- list('0' = list(doi = doi,
+                              citation = authors))
 
-  return(test_list)
+
+  return(pub_list)
 }
 
 write_stac <- function(x, path, ...){
