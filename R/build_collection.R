@@ -8,7 +8,7 @@ build_collection <- function(id,
                              keywords = NULL,
                              providers = NULL,
                              summaries = NULL,
-                             description,
+                             description = NULL,
                              item_assets = NULL,
                              tables = NULL,
                              extensions = NULL,
@@ -30,11 +30,13 @@ build_collection <- function(id,
                           stac_version = '1.0.0',
                           tables = tables,
                           group_id = 'FLARE_forecast_id', ##just a placeholder for now
-                          container = 'container_name', ##placeholder
-                          stac_extensions = extensions,
-                          publications = publications,
-                          storage_account = 'account_name', #placeholder
-                          short_description = "description"
+                          #container = 'container_name', ##placeholder
+                          stac_extensions = list(0 = "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+                                                 1 = "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+                                                 2 = 	"https://stac-extensions.github.io/table/v1.2.0/schema.json"),
+                          publications = publications
+                          #storage_account = 'account_name', #placeholder
+                          #short_description = "description"
   )
 
   return(collection_list)
@@ -85,6 +87,7 @@ build_parquet <- function(parquet_uri, title, description){ #assuming a parquet 
   return(parquet_list)
 }
 
+
 build_extent <- function(){
 
   extent_list <- list(spatial = list())
@@ -120,7 +123,7 @@ build_item_assets <- function(){
 }
 
 
-build_tables <- function(){
+build_table_columns <- function(){
 
   test_list <- list()
 
