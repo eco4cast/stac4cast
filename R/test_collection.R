@@ -1,0 +1,18 @@
+
+build_collection(id,
+                 links = NULL,
+                 title,
+                 assets = build_assets(tnail_object = 'png_placeholder',
+                                       tnail_title = 'placeholder thumbnail object',
+                                       parquet_uri = 'abfs://items/noaa-climate-normals-tabular.parquet',
+                                       p_title = 'Parquet Items',
+                                       p_description = 'Placeholder description for parquet items'),
+                 extent = NULL,
+                 keywords = NULL,
+                 providers = NULL,
+                 summaries = NULL,
+                 description,
+                 item_assets = NULL,
+                 tables = NULL,
+                 extensions = NULL,
+                 publications = NULL)

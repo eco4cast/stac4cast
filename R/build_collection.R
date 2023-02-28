@@ -3,7 +3,7 @@
 build_collection <- function(id,
                              links = NULL,
                              title,
-                             assets = NULL,
+                             assets = build_assets(tnail_object, tnail_title, parquet_uri, p_title, p_description),
                              extent = NULL,
                              keywords = NULL,
                              providers = NULL,
@@ -42,23 +42,52 @@ build_collection <- function(id,
 
 
 
-build_links <- function(){
+build_links <- function(){ # this needs to be more flexible in the future -- for loop or similar
 
-test_list <- list()
+links_list <- list(0 = list(rel = "items", type = NA, href = NA),
+                   1 = list(rel = "parent", type = NA, href = NA),
+                   2 = list(rel = "root", type = NA, href = NA),
+                   3 = list(rel = "self", type = NA, href = NA),
+                   4 = list(rel = "cite-as", href = NA),
+                   5 = list(rel = "cite-as", href = NA),
+                   6 = list(rel = "about", href = NA, type = NA, title = NA),
+                   7 = list(rel = "license", href = NA, type = NA, title = NA),
+                   8 = list(rel = "describedby", href = NA, title = NA,type = NA))
 
 return(test_list)
 }
 
-build_asset <- function(){
+build_assets <- function(tnail_object, tnail_title, parquet_uri, p_title, p_description){ ## come back to later
 
-  test_list <- list()
+  assets_list <- list(thumbnail = build_thumbnail(tnail_title,tnail_title),
+                     parquet_items = build_parquet(parquet_uri, p_title, p_description))
 
-  return(test_list)
+  return(assets_list)
+}
+
+
+build_thumbnail <- function(tnail_object,title){ #assuming thubmail is an image
+
+  thumbnail_list <- list(href = tnail_object,
+                         type = "image/png",
+                         roles = list('0' = "thumbnail"),
+                         title = title)
+  return(thumbnail_list)
+}
+
+build_parquet <- function(parquet_uri, title, description){ #assuming a parquet file
+
+  parquet_list <- list(href = parquet_uri,
+                         type = "application/x-parquet",
+                         roles = list('0' = "stac-items"),
+                         title = title,
+                         description = description)
+  return(parquet_list)
 }
 
 build_extent <- function(){
 
-  test_list <- list()
+  extent_list <- list(spatial = list())
 
   return(test_list)
 }
