@@ -35,6 +35,8 @@ build_collection <- function(id,
                           publications = publications
   )
 
+  ## WRITE COLLECTION LIST INTO JSON FORMAT
+
   return(collection_list)
 }
 
@@ -84,17 +86,25 @@ build_parquet <- function(parquet_uri, title, description){ #assuming a parquet 
 }
 
 
-build_extent <- function(){
+build_extent <- function(lat_min, lat_max, lon_min, lon_max, min_date, max_date){
 
-  extent_list <- list(spatial = list())
+  bbox_list <- list('0' = lon_min,
+                    '1' = lat_min,
+                    '2' = lon_max,
+                    '3' = lat_max)
 
-  return(test_list)
+  extent_list <- list(spatial = list(bbox = bbox_list),
+                      temporal = list(interval = list('0' = min_date,
+                                                      '1' = max_date)))
+
+  return(extent_list)
 }
 
-build_keywords <- function(){
-  test_list <- list()
+build_keywords <- function(keywords){
 
-  return(test_list)
+  keyword_list <- as.list(keywords)
+
+  return(keyword_list)
 }
 
 build_providers <- function(){
@@ -131,6 +141,7 @@ build_table_columns <- function(parquet_table,description_df){
 
   return(init_list)
 }
+
 
 build_stac_extensions <- function(){
 

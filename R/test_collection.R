@@ -33,6 +33,12 @@ description_create <- data.frame(reference_datetime = 'ISO 8601(ISO 2019)datetim
 doi_info <- 'https://doi.org/10.32942/osf.io/9dgtq'
 author_info <- 'Michael C. Dietze, R. Quinn Thomas, Jody Peters, Carl Boettiger, Alexey N Shiklomanov, Jaime Ashander'
 
+keyword_input <- c('Forecasting','Data','Ecology')
+
+
+
+
+##### BUILD COLLECTION BY CALLING FUNCTION)
 build_collection(id,
                  links = NULL,
                  title,
@@ -41,8 +47,13 @@ build_collection(id,
                                        parquet_uri = 'https://data.ecoforecst.org/forecasts/parquet/aquatics',
                                        p_title = 'Parquet STAC Items',
                                        p_description = 'Placeholder description for parquet items'),
-                 extent = NULL,
-                 keywords = NULL,
+                 extent = build_extent(lat_min = -90,
+                                       lat_max = 90,
+                                       lon_min = -180,
+                                       lon_max = 180,
+                                       min_date = '2022-01-01', ##come back to the date values -- need to ask
+                                       max_date = Sys.Date()),
+                 keywords = build_keywords(keyword_input),
                  providers = NULL,
                  summaries = NULL,
                  description,
