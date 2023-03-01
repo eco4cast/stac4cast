@@ -5,7 +5,7 @@ id_info <- 'efi-aquatics' #just a placeholder
 
 title_info <- 'Ecological Forecasting Initiative - Aquatics Forecasts'
 
-description <- 'description placeholder' #may be able to use something from the preprint
+description_info <- 'description placeholder' #may be able to use something from the preprint
 
 keyword_input <- c('Forecasting','Data','Ecology') ##just an example -- change these later
 
@@ -58,11 +58,10 @@ build_collection(id = id_info,
                                      cite_doi = doi_info,
                                      land_page_url = landing_page),
                  title = title_info,
-                 assets = build_assets(tnail_object = 'png_placeholder',
-                                       tnail_title = 'placeholder thumbnail title',
-                                       parquet_uri = 'https://data.ecoforecst.org/forecasts/parquet/aquatics',
-                                       p_title = 'Parquet STAC Items',
-                                       p_description = 'Placeholder description for parquet items'),
+                 assets = build_assets(thumbnail = build_thumbnail(href = 'png_placeholder', title = 'placeholder thumbnail title'),
+                                       parquet_items = build_parquet(href = 'https://data.ecoforecst.org/forecasts/parquet/aquatics',
+                                                                     title = 'Parquet STAC Items',
+                                                                     description = 'Placeholder description for parquet items')),
                  extent = build_extent(lat_min = -90,
                                        lat_max = 90,
                                        lon_min = -180,
@@ -75,11 +74,11 @@ build_collection(id = id_info,
                                              host_url = 'https://ecoforecst.org',
                                              host_name = 'Ecoforecast'),
                  summaries = NULL,
-                 description,
+                 description = description_info,
                  item_assets = NULL,
                  tables = build_table_columns(parquet_table = theme_df,
                                               description_df = description_create),
-                 #extensions
+                 extensions = stac_extensions,
                  publications = build_publications(doi = doi_info,
-                                                   authors = author_info)
+                                                   citation = author_info)
                  )

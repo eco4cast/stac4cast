@@ -39,7 +39,7 @@ build_collection <- function(id,
 
 
 
-build_links <- function(parent_link, cite_doi, landing_page){ # this needs to be more flexible in the future -- for loop or similar
+build_links <- function(href_link, cite_doi, landing_page){ # this needs to be more flexible in the future -- for loop or similar
 
 
 links_list <- list(list(rel = "items", type = NA, href = paste0(parent_link,'/api/stac/v1/collections/eco4cast/items')),
@@ -55,18 +55,18 @@ return(test_list)
 }
 
 
-build_assets <- function(tnail_object, tnail_title, parquet_uri, p_title, p_description){ ## come back to later
+build_assets <- function(thumbnail = build_thumbnail(), parquet_items = build_parquet()){ ## come back to later
 
-  assets_list <- list(thumbnail = build_thumbnail(tnail_title,tnail_title),
-                     parquet_items = build_parquet(parquet_uri, p_title, p_description))
+  assets_list <- list(thumbnail = thumbnail,
+                     parquet_items = parquet_items)
 
   return(assets_list)
 }
 
 
-build_thumbnail <- function(tnail_object,title){ #assuming thubmail is an image
+build_thumbnail <- function(href,title){ #assuming thubmail is an image
 
-  thumbnail_list <- list(href = tnail_object,
+  thumbnail_list <- list(href = href,
                          type = "image/png",
                          roles = list('0' = "thumbnail"),
                          title = title)
@@ -74,9 +74,9 @@ build_thumbnail <- function(tnail_object,title){ #assuming thubmail is an image
 }
 
 
-build_parquet <- function(parquet_uri, title, description){ #assuming a parquet file
+build_parquet <- function(href, title, description){ #assuming a parquet file
 
-  parquet_list <- list(href = parquet_uri,
+  parquet_list <- list(href = href,
                          type = "application/x-parquet",
                          roles = list("stac-items"),
                          title = title,
@@ -151,10 +151,10 @@ build_stac_extensions <- function(){
   return(test_list)
 }
 
-build_publications <- function(doi,authors){
+build_publications <- function(doi,citation){
 
   pub_list <- list(list(doi = doi,
-                   citation = authors))
+                   citation = citation))
 
 
   return(pub_list)
