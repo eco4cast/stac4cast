@@ -1,4 +1,25 @@
 
+## define function arguments not found elsewhere
+
+id_info <- 'efi-aquatics' #just a placeholder
+
+title_info <- 'Ecological Forecasting Initiative - Aquatics Forecasts'
+
+description <- 'description placeholder' #may be able to use something from the preprint
+
+keyword_input <- c('Forecasting','Data','Ecology') ##just an example -- change these later
+
+doi_info <- 'https://doi.org/10.32942/osf.io/9dgtq'
+author_info <- 'Michael C. Dietze, R. Quinn Thomas, Jody Peters, Carl Boettiger, Alexey N Shiklomanov, Jaime Ashander'
+
+stac_extensions <- list("https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+                        "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+                        "https://stac-extensions.github.io/table/v1.2.0/schema.json")
+
+
+parent_url <- 'https://data.ecoforecst.org/forecasts/parquet/aquatics'
+landing_page_url <- 'https://ecoforecast.org/'
+
 ## initialize dataframes for table metadata and column descriptions
 
 theme <- "aquatics"
@@ -30,18 +51,13 @@ description_create <- data.frame(reference_datetime = 'ISO 8601(ISO 2019)datetim
                              date = 'ISO 8601(ISO 2019)datetime being predicted; follows CF conventionhttp://cfconventions.org/cf-conventions/cf-conventions.html#time-coordinate. This variable was called time before v0.5of the EFIconvention.For time-integrated variables (e.g., cumulative net primary productivity), one should specify thestart_datetimeandend_datetimeas two variables, instead of the singledatetime.If this is not providedthedatetimeis assumed to be the MIDPOINT of theintegrationperiod.'
 )
 
-doi_info <- 'https://doi.org/10.32942/osf.io/9dgtq'
-author_info <- 'Michael C. Dietze, R. Quinn Thomas, Jody Peters, Carl Boettiger, Alexey N Shiklomanov, Jaime Ashander'
-
-keyword_input <- c('Forecasting','Data','Ecology')
-
-
-
 
 ##### BUILD COLLECTION BY CALLING FUNCTION)
-build_collection(id,
-                 links = NULL,
-                 title,
+build_collection(id = id_info,
+                 links = build_links(parent_link = parent_url,
+                                     cite_doi = doi_info,
+                                     land_page_url = landing_page),
+                 title = title_info,
                  assets = build_assets(tnail_object = 'png_placeholder',
                                        tnail_title = 'placeholder thumbnail title',
                                        parquet_uri = 'https://data.ecoforecst.org/forecasts/parquet/aquatics',
@@ -51,10 +67,13 @@ build_collection(id,
                                        lat_max = 90,
                                        lon_min = -180,
                                        lon_max = 180,
-                                       min_date = '2022-01-01', ##come back to the date values -- need to ask
+                                       min_date = '2022-01-01', ##come back to the date values -- need to extract this automatically
                                        max_date = Sys.Date()),
                  keywords = build_keywords(keyword_input),
-                 providers = NULL,
+                 providers = build_providers(data_url = 'https://data.ecoforecst.org',
+                                             data_name = 'Ecoforecast Data',
+                                             host_url = 'https://ecoforecst.org',
+                                             host_name = 'Ecoforecast'),
                  summaries = NULL,
                  description,
                  item_assets = NULL,

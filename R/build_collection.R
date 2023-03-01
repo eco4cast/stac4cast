@@ -1,22 +1,22 @@
 
 
 build_collection <- function(id,
-                             links = NULL,
-                             title,
-                             assets = build_assets(tnail_object, tnail_title, parquet_uri, p_title, p_description),
-                             extent = NULL,
+                             links = build_links(),
+                             title = NULL,
+                             assets = NULL,
+                             extent = build_extent(),
                              keywords = NULL,
                              providers = NULL,
                              summaries = NULL,
-                             description = NULL,
+                             description,
                              item_assets = NULL,
-                             table_columns,
-                             #extensions = NULL,
+                             table_columns = NULL,
+                             extensions = NULL,
                              publications = NULL) {
 
   collection_list <- list(id = id,
                           type = "Collection",
-                          links = NULL,
+                          links = links,
                           title = title,
                           assets = assets, #REMEMBER TO COLLAPSE NULLS
                           extent = extent,
@@ -27,11 +27,8 @@ build_collection <- function(id,
                           description = description,
                           item_assets = item_assets,
                           stac_version = '1.0.0',
-                          table_columns = tables, ##need to use table:columns but syntax confused R...fix later
-                          group_id = 'FLARE_forecast_id', ##just a placeholder for now
-                          stac_extensions = list('0' = "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
-                                                 '1' = "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
-                                                 '2' = 	"https://stac-extensions.github.io/table/v1.2.0/schema.json"),
+                          table_columns = table_columns, ##need to use table:columns but syntax confused R...fix later
+                          stac_extensions = extensions,
                           publications = publications
   )
 
@@ -42,20 +39,21 @@ build_collection <- function(id,
 
 
 
-build_links <- function(){ # this needs to be more flexible in the future -- for loop or similar
+build_links <- function(parent_link, cite_doi, landing_page){ # this needs to be more flexible in the future -- for loop or similar
 
-links_list <- list(0 = list(rel = "items", type = NA, href = NA),
-                   1 = list(rel = "parent", type = NA, href = NA),
-                   2 = list(rel = "root", type = NA, href = NA),
-                   3 = list(rel = "self", type = NA, href = NA),
-                   4 = list(rel = "cite-as", href = NA),
-                   5 = list(rel = "cite-as", href = NA),
-                   6 = list(rel = "about", href = NA, type = NA, title = NA),
-                   7 = list(rel = "license", href = NA, type = NA, title = NA),
-                   8 = list(rel = "describedby", href = NA, title = NA,type = NA))
+
+links_list <- list(list(rel = "items", type = NA, href = paste0(parent_link,'/api/stac/v1/collections/eco4cast/items')),
+                   list(rel = "parent", type = "application/json", href = paste0(parent_link,'/api/stac/v1')),
+                   list(rel = "root", type = "application/json", href = paste0(parent_link,'/api/stac/v1')),
+                   list(rel = "self", type = "application/json", href = paste0(parent_link,'/api/stac/v1/collections/eco4cast')),
+                   list(rel = "cite-as", href = cite_doi),
+                   list(rel = "about", href = landing_page, type = 'text/html', title = 'Organization Landing Page'),
+                   #list(rel = "license", href = NA, type = NA, title = NA),
+                   list(rel = "describedby", href = landing_page, title = 'Organization Landing Page',type = 'text/html'))
 
 return(test_list)
 }
+
 
 build_assets <- function(tnail_object, tnail_title, parquet_uri, p_title, p_description){ ## come back to later
 
@@ -75,30 +73,37 @@ build_thumbnail <- function(tnail_object,title){ #assuming thubmail is an image
   return(thumbnail_list)
 }
 
+
 build_parquet <- function(parquet_uri, title, description){ #assuming a parquet file
 
   parquet_list <- list(href = parquet_uri,
                          type = "application/x-parquet",
-                         roles = list('0' = "stac-items"),
+                         roles = list("stac-items"),
                          title = title,
                          description = description)
   return(parquet_list)
 }
 
 
-build_extent <- function(lat_min, lat_max, lon_min, lon_max, min_date, max_date){
+build_extent <- function(lat_min, lat_max, lon_min, lon_max, min_date, max_date = NULL){ ##if data through present then set max_date = NULL
 
-  bbox_list <- list('0' = lon_min,
-                    '1' = lat_min,
-                    '2' = lon_max,
-                    '3' = lat_max)
+  if (is.null(max_date)){
+    temporal_list <- list(min_date,'null')
+  }else{
+    temporal_list <- list(min_date, max_date)
+  }
+
+  bbox_list <- list(lon_min,
+                    lat_min,
+                    lon_max,
+                    lat_max)
 
   extent_list <- list(spatial = list(bbox = bbox_list),
-                      temporal = list(interval = list('0' = min_date,
-                                                      '1' = max_date)))
+                      temporal = list(interval = temporal_list))
 
   return(extent_list)
 }
+
 
 build_keywords <- function(keywords){
 
@@ -107,25 +112,21 @@ build_keywords <- function(keywords){
   return(keyword_list)
 }
 
-build_providers <- function(){
+build_providers <- function(data_url, data_name, host_url, host_name){
 
-  test_list <- list()
+  data_provider_list <- list(url = data_url,
+                             name = data_name,
+                             roles = list("producer",
+                                          "processor",
+                                          "licensor"))
+  host_provider_list <- list(url = host_url,
+                             name = host_name,
+                             roles = list('host'))
 
-  return(test_list)
-}
+  providers_list <- list(data_provider_list,
+                         host_provider_list)
 
-build_summaries <- function(){
-
-  test_list <- list()
-
-  return(test_list)
-}
-
-build_item_assets <- function(){
-
-  test_list <- list()
-
-  return(test_list)
+  return(providers_list)
 }
 
 
@@ -152,8 +153,8 @@ build_stac_extensions <- function(){
 
 build_publications <- function(doi,authors){
 
-  pub_list <- list('0' = list(doi = doi,
-                              citation = authors))
+  pub_list <- list(list(doi = doi,
+                   citation = authors))
 
 
   return(pub_list)
@@ -163,3 +164,17 @@ write_stac <- function(x, path, ...){
   jsonData <- jsonlite::toJSON(x)
   jsonlite::write_json(jsonData, path, ...)
 }
+
+# build_summaries <- function(){
+#
+#   test_list <- list()
+#
+#   return(test_list)
+# }
+#
+# build_item_assets <- function(){
+#
+#   test_list <- list()
+#
+#   return(test_list)
+# }
