@@ -67,14 +67,14 @@ build_assets <- function(thumbnail = build_thumbnail(), parquet_items = build_pa
 build_thumbnail <- function(href,title){ #assuming thubmail is an image
 
   thumbnail_list <- list(href = href,
-                         type = "image/png",
+                         type = "image/JPEG",
                          roles = list('0' = "thumbnail"),
                          title = title)
   return(thumbnail_list)
 }
 
 
-build_parquet <- function(href, title, description){ #assuming a parquet file
+build_parquet <- function(href, title = NULL, description = NULL){ #assuming a parquet file
 
   parquet_list <- list(href = href,
                          type = "application/x-parquet",
@@ -130,19 +130,26 @@ build_providers <- function(data_url, data_name, host_url, host_name){
 }
 
 
-build_table_columns <- function(parquet_table,description_df){
+build_table_columns <- function(arrow_object,description_df){
 
+  full_string_list <- strsplit(arrow_object[[1]]$ToString(),'\n')[[1]]
+
+  init_list = vector(mode="list", length = arrow_object[[1]]$num_cols)
+
+  #create initial empty list
   init_list = vector(mode="list", length = ncol(parquet_table))
 
+## loop through parquet df and description information to build the list
+  for (i in seq.int(1,arrow_object[[1]]$num_cols)){
+    list_items <- strsplit(full_string_list[i],': ')[[1]]
+    col_list <- list(name = list_items[1],
+                     type = list_items[2],
+                     description = description_df[1,i])
 
-  for (i in seq.int(1,ncol(summary_test))){
-    col_list <- list(names(summary_test)[i],summary_test[1,i][[1]],description_df[1,i])
     init_list[[i]] <- col_list
+
   }
-
-  return(init_list)
 }
-
 
 build_stac_extensions <- function(){
 
@@ -164,6 +171,7 @@ write_stac <- function(x, path, ...){
   jsonData <- jsonlite::toJSON(x)
   jsonlite::write_json(jsonData, path, ...)
 }
+
 
 # build_summaries <- function(){
 #

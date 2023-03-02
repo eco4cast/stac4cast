@@ -18,7 +18,7 @@ stac_extensions <- list("https://stac-extensions.github.io/scientific/v1.0.0/sch
 
 
 parent_url <- 'https://data.ecoforecst.org/forecasts/parquet/aquatics'
-landing_page_url <- 'https://ecoforecast.org/'
+landing_page_url <- 'https://projects.ecoforecast.org/neon4cast-catalog/aquatics-catalog.html'
 
 ## initialize dataframes for table metadata and column descriptions
 
@@ -29,8 +29,8 @@ s3 <- arrow::s3_bucket(bucket = paste0("neon4cast-scores/parquet/", theme),
 
 
 theme_df <- arrow::open_dataset(s3) %>%
-  filter(reference_datetime == '2023-02-27', site_id == 'BARC') %>% ##this used to just download data as quickly as possible -- need to revisit
-  collect()
+  filter(reference_datetime == '2023-02-27', site_id == 'BARC') #%>% ##this used to just download data as quickly as possible -- need to revisit
+  #collect()
 
 description_create <- data.frame(reference_datetime = 'ISO 8601(ISO 2019)datetime the forecast starts from (a.k.a. issue time); Only needed if more than one reference_datetime is stored in asingle file. Forecast lead time is thus datetime-reference_datetime. Ina hindcast the reference_datetimewill be earlierthan the time thehindcast was actually produced (seepubDatein Section3). Datetimesare allowed to be earlier than thereference_datetimeif areanalysis/reforecast is run before the start of the forecast period. Thisvariable was calledstart_timebefore v0.5 of theEFI standard.',
                              site_id = 'For forecasts that are not on a spatial grid, use of a site dimension thatmaps to a more detailed geometry (points, polygons, etc.) is allowable.In general this would be documented in the external metadata (e.g., alook-up table that provides lon and lat); however in netCDF this couldbe handled by the CF Discrete Sampling Geometry data model.',
@@ -58,7 +58,7 @@ build_collection(id = id_info,
                                      cite_doi = doi_info,
                                      land_page_url = landing_page),
                  title = title_info,
-                 assets = build_assets(thumbnail = build_thumbnail(href = 'png_placeholder', title = 'placeholder thumbnail title'),
+                 assets = build_assets(thumbnail = build_thumbnail(href = 'https://ecoforecast.org/wp-content/uploads/2019/12/EFI_Logo-1.jpg', title = 'EFI Logo'),
                                        parquet_items = build_parquet(href = 'https://data.ecoforecst.org/forecasts/parquet/aquatics',
                                                                      title = 'Parquet STAC Items',
                                                                      description = 'Placeholder description for parquet items')),
