@@ -11,8 +11,8 @@ description_info <- 'description placeholder' #may be able to use something from
 
 keyword_input <- c('Forecasting','Data','Ecology') ##just an example -- change these later
 
-doi_info <- 'https://doi.org/10.32942/osf.io/9dgtq'
-author_info <- 'Michael C. Dietze, R. Quinn Thomas, Jody Peters, Carl Boettiger, Alexey N Shiklomanov, Jaime Ashander'
+doi_info <- 'https://www.doi.org/10.22541/essoar.167079499.99891914/v1'
+author_info <- 'Thomas, R.Q., C. Boettiger, C.C. Carey, M.C. Dietze, L.R. Johnson, M.A. Kenney, J.S. Mclachlan, J.A. Peters, E.R. Sokol, J.F. Weltzin, A. Willson, W.M. Woelmer, and Challenge Contributors. The NEON Ecological Forecasting Challenge. Accepted at Frontiers in Ecology and Environment. Pre-print'
 
 stac_extensions <- list("https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
                         "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
@@ -31,7 +31,7 @@ s3 <- arrow::s3_bucket(bucket = paste0("neon4cast-scores/parquet/", theme),
 
 
 theme_df <- arrow::open_dataset(s3) %>%
-  filter(reference_datetime == '2023-02-27', site_id == 'BARC') #%>% ##this used to just download data as quickly as possible -- need to revisit
+  filter(reference_datetime == '2023-02-27', site_id == 'BARC', variable == 'temperature') #%>% ##this used to just download data as quickly as possible -- need to revisit
   #collect()
 
 description_create <- data.frame(reference_datetime = 'ISO 8601(ISO 2019)datetime the forecast starts from (a.k.a. issue time); Only needed if more than one reference_datetime is stored in asingle file. Forecast lead time is thus datetime-reference_datetime. Ina hindcast the reference_datetimewill be earlierthan the time thehindcast was actually produced (seepubDatein Section3). Datetimesare allowed to be earlier than thereference_datetimeif areanalysis/reforecast is run before the start of the forecast period. Thisvariable was calledstart_timebefore v0.5 of theEFI standard.',
@@ -55,7 +55,7 @@ description_create <- data.frame(reference_datetime = 'ISO 8601(ISO 2019)datetim
 
 
 ##### BUILD COLLECTION BY CALLING FUNCTION)
-build_collection(id = id_info,
+collection <- build_collection(id = id_info,
                  links = build_links(href_link = parent_url,
                                      cite_doi = doi_info,
                                      landing_page = landing_page_url),
@@ -84,3 +84,6 @@ build_collection(id = id_info,
                  publications = build_publications(doi = doi_info,
                                                    citation = author_info)
                  )
+
+
+write_stac(collection, file.path(getwd(),'output.json'))

@@ -135,19 +135,13 @@ build_providers <- function(data_url, data_name, host_url, host_name){
 
 build_table_columns <- function(arrow_object,description_df){
 
-  message('starting string extraction')
-
   full_string_list <- strsplit(arrow_object[[1]]$ToString(),'\n')[[1]]
 
+  #create initial empty list
   init_list = vector(mode="list", length = arrow_object[[1]]$num_cols)
 
-  #create initial empty list
-  init_list = vector(mode="list", length = ncol(arrow_object))
-
-  message('starting loop')
 ## loop through parquet df and description information to build the list
   for (i in seq.int(1,arrow_object[[1]]$num_cols)){
-    print(i)
     list_items <- strsplit(full_string_list[i],': ')[[1]]
     col_list <- list(name = list_items[1],
                      type = list_items[2],
@@ -175,9 +169,9 @@ build_publications <- function(doi,citation){
   return(pub_list)
 }
 
-write_stac <- function(x, path, ...){
-  jsonData <- jsonlite::toJSON(x)
-  jsonlite::write_json(jsonData, path, ...)
+write_stac <- function(collection_object, path, ...){
+  compact_collection <- purrr::compact(collection_object)
+  jsonlite::write_json(compact_collection, path, pretty = TRUE, auto_unbox = TRUE)
 }
 
 
