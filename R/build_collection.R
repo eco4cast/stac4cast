@@ -1,6 +1,9 @@
 
 
 build_collection <- function(id,
+                             type = 'Collection',
+                             stac_version = '1.0.0',
+                             license = 'proprietary',
                              links = build_links(),
                              title = NULL,
                              assets = NULL,
@@ -15,18 +18,18 @@ build_collection <- function(id,
                              publications = NULL) {
 
   collection_list <- list(id = id,
-                          type = "Collection",
+                          type = type,
                           links = links,
                           title = title,
                           assets = assets, #REMEMBER TO COLLAPSE NULLS
                           extent = extent,
-                          license = "proprietary",
+                          license = license,
                           keywords = keywords,
                           providers = providers,
                           summaries = summaries,
                           description = description,
                           item_assets = item_assets,
-                          stac_version = '1.0.0',
+                          stac_version = stac_version,
                           table_columns = table_columns, ##need to use table:columns but syntax confused R...fix later
                           stac_extensions = extensions,
                           publications = publications
@@ -42,16 +45,16 @@ build_collection <- function(id,
 build_links <- function(href_link, cite_doi, landing_page){ # this needs to be more flexible in the future -- for loop or similar
 
 
-links_list <- list(list(rel = "items", type = NA, href = paste0(parent_link,'/api/stac/v1/collections/eco4cast/items')),
-                   list(rel = "parent", type = "application/json", href = paste0(parent_link,'/api/stac/v1')),
-                   list(rel = "root", type = "application/json", href = paste0(parent_link,'/api/stac/v1')),
-                   list(rel = "self", type = "application/json", href = paste0(parent_link,'/api/stac/v1/collections/eco4cast')),
+links_list <- list(list(rel = "items", type = NA, href = paste0(href_link,'/api/stac/v1/collections/eco4cast/items')),
+                   list(rel = "parent", type = "application/json", href = paste0(href_link,'/api/stac/v1')),
+                   list(rel = "root", type = "application/json", href = paste0(href_link,'/api/stac/v1')),
+                   list(rel = "self", type = "application/json", href = paste0(href_link,'/api/stac/v1/collections/eco4cast')),
                    list(rel = "cite-as", href = cite_doi),
                    list(rel = "about", href = landing_page, type = 'text/html', title = 'Organization Landing Page'),
                    #list(rel = "license", href = NA, type = NA, title = NA),
                    list(rel = "describedby", href = landing_page, title = 'Organization Landing Page',type = 'text/html'))
 
-return(test_list)
+return(links_list)
 }
 
 
@@ -132,15 +135,19 @@ build_providers <- function(data_url, data_name, host_url, host_name){
 
 build_table_columns <- function(arrow_object,description_df){
 
+  message('starting string extraction')
+
   full_string_list <- strsplit(arrow_object[[1]]$ToString(),'\n')[[1]]
 
   init_list = vector(mode="list", length = arrow_object[[1]]$num_cols)
 
   #create initial empty list
-  init_list = vector(mode="list", length = ncol(parquet_table))
+  init_list = vector(mode="list", length = ncol(arrow_object))
 
+  message('starting loop')
 ## loop through parquet df and description information to build the list
   for (i in seq.int(1,arrow_object[[1]]$num_cols)){
+    print(i)
     list_items <- strsplit(full_string_list[i],': ')[[1]]
     col_list <- list(name = list_items[1],
                      type = list_items[2],
@@ -149,6 +156,7 @@ build_table_columns <- function(arrow_object,description_df){
     init_list[[i]] <- col_list
 
   }
+  return(init_list)
 }
 
 build_stac_extensions <- function(){

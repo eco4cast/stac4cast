@@ -1,4 +1,6 @@
 
+source('/home/rstudio/stac4cast/R/build_collection.R')
+
 ## define function arguments not found elsewhere
 
 id_info <- 'efi-aquatics' #just a placeholder
@@ -54,9 +56,9 @@ description_create <- data.frame(reference_datetime = 'ISO 8601(ISO 2019)datetim
 
 ##### BUILD COLLECTION BY CALLING FUNCTION)
 build_collection(id = id_info,
-                 links = build_links(parent_link = parent_url,
+                 links = build_links(href_link = parent_url,
                                      cite_doi = doi_info,
-                                     land_page_url = landing_page),
+                                     landing_page = landing_page_url),
                  title = title_info,
                  assets = build_assets(thumbnail = build_thumbnail(href = 'https://ecoforecast.org/wp-content/uploads/2019/12/EFI_Logo-1.jpg', title = 'EFI Logo'),
                                        parquet_items = build_parquet(href = 'https://data.ecoforecst.org/forecasts/parquet/aquatics',
@@ -76,7 +78,7 @@ build_collection(id = id_info,
                  summaries = NULL,
                  description = description_info,
                  item_assets = NULL,
-                 tables = build_table_columns(parquet_table = theme_df,
+                 table_columns = build_table_columns(arrow_object = theme_df,
                                               description_df = description_create),
                  extensions = stac_extensions,
                  publications = build_publications(doi = doi_info,
