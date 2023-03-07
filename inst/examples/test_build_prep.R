@@ -47,10 +47,10 @@ theme_df <- arrow::open_dataset(s3) %>%
   #filter(model_id == model_id, reference_datetime == reference_datetime) %>% ##this used to just download data as quickly as possible -- need to revisit
   #collect()
 
-  date_extent <-  arrow::open_dataset(s3) %>%
-  summarise(min = min(date),
-            max = max(date)) %>%
-  collect()
+  #date_extent <-  arrow::open_dataset(s3) %>%
+  #summarise(min = min(date),
+            #max = max(date)) %>%
+  #collect()
 
 description_create <- data.frame(datetime = 'ISO 8601(ISO 2019)datetime the forecast starts from (a.k.a. issue time); Only needed if more than one reference_datetime is stored in asingle file. Forecast lead time is thus datetime-reference_datetime. Ina hindcast the reference_datetimewill be earlierthan the time thehindcast was actually produced (seepubDatein Section3). Datetimesare allowed to be earlier than thereference_datetimeif areanalysis/reforecast is run before the start of the forecast period. Thisvariable was calledstart_timebefore v0.5 of theEFI standard.',
                                  site_id = 'For forecasts that are not on a spatial grid, use of a site dimension thatmaps to a more detailed geometry (points, polygons, etc.) is allowable.In general this would be documented in the external metadata (e.g., alook-up table that provides lon and lat); however in netCDF this couldbe handled by the CF Discrete Sampling Geometry data model.',
