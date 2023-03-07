@@ -1,12 +1,17 @@
 Package: stac4cast
-Title: What the Package Does (One Line, Title Case)
+Title: A Package for building STAC JSON files
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+    person("Austin", "Delany", , "addelany@vt.edu", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: This package creates and transforms metadata for ecological forecasts. The metadata is converted into JSON files that follow STAC standards. 
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
+Imports:
+    tidyverse,
+    jsonlite,
+    httr,
+    arrow
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
