@@ -3,7 +3,7 @@ library(tidyverse)
 library(arrow)
 
 
-source('/home/rstudio/stac4cast/R/build_collection.R')
+#source('/home/rstudio/stac4cast/R/build_collection.R')
 
 ## define function arguments not found elsewhere
 
@@ -47,10 +47,10 @@ theme_df <- arrow::open_dataset(s3) %>%
   #filter(model_id == model_id, reference_datetime == reference_datetime) %>% ##this used to just download data as quickly as possible -- need to revisit
   #collect()
 
-date_extent <-  arrow::open_dataset(s3) %>%
-    summarise(min = min(date),
-              max = max(date)) %>%
-    collect()
+  date_extent <-  arrow::open_dataset(s3) %>%
+  summarise(min = min(date),
+            max = max(date)) %>%
+  collect()
 
 description_create <- data.frame(datetime = 'ISO 8601(ISO 2019)datetime the forecast starts from (a.k.a. issue time); Only needed if more than one reference_datetime is stored in asingle file. Forecast lead time is thus datetime-reference_datetime. Ina hindcast the reference_datetimewill be earlierthan the time thehindcast was actually produced (seepubDatein Section3). Datetimesare allowed to be earlier than thereference_datetimeif areanalysis/reforecast is run before the start of the forecast period. Thisvariable was calledstart_timebefore v0.5 of theEFI standard.',
                                  site_id = 'For forecasts that are not on a spatial grid, use of a site dimension thatmaps to a more detailed geometry (points, polygons, etc.) is allowable.In general this would be documented in the external metadata (e.g., alook-up table that provides lon and lat); however in netCDF this couldbe handled by the CF Discrete Sampling Geometry data model.',
@@ -72,46 +72,3 @@ description_create <- data.frame(datetime = 'ISO 8601(ISO 2019)datetime the fore
                                  #model_id = 'unique identifier for the model used in the forecast',
                                  #date = 'ISO 8601(ISO 2019)datetime being predicted; follows CF conventionhttp://cfconventions.org/cf-conventions/cf-conventions.html#time-coordinate. This variable was called time before v0.5of the EFIconvention.For time-integrated variables (e.g., cumulative net primary productivity), one should specify thestart_datetimeandend_datetimeas two variables, instead of the singledatetime.If this is not providedthedatetimeis assumed to be the MIDPOINT of theintegrationperiod.'
 )
-
-
-## find min and max dates --update later
-# theme_df %>%
-#   # find min and max
-#   summarise(min = min(date),
-#             max = max(date))
-
-
-##### BUILD COLLECTION BY CALLING FUNCTION
-collection <- build_collection(id = id_info,
-                               links = build_links(href_link = parent_url,
-                                                   cite_doi = doi_info,
-                                                   landing_page = landing_page_url),
-                               title = title_info,
-                               assets = build_assets(thumbnail = build_thumbnail(href = 'https://ecoforecast.org/wp-content/uploads/2019/12/EFI_Logo-1.jpg', title = 'EFI Logo'),
-                                                     parquet_items = build_parquet(href = 'https://data.ecoforecst.org/forecasts/parquet/aquatics',
-                                                                                   title = 'Parquet STAC Items',
-                                                                                   description = 'Placeholder description for parquet items')),
-                               extent = build_extent(lat_min = -90,
-                                                     lat_max = 90,
-                                                     lon_min = -180,
-                                                     lon_max = 180,
-                                                     min_date = '2022-01-01', ##come back to the date values -- need to extract this automatically
-                                                     max_date = Sys.Date()),
-                               keywords = build_keywords(keyword_input),
-                               providers = build_providers(data_url = 'https://data.ecoforecst.org',
-                                                           data_name = 'Ecoforecast Data',
-                                                           host_url = 'https://ecoforecst.org',
-                                                           host_name = 'Ecoforecast'),
-                               summaries = NULL,
-                               description = description_info,
-                               item_assets = NULL,
-                               table_columns = build_table_columns(data_object = theme_df,
-                                                                   description_df = description_create),
-                               extensions = stac_extensions,
-                               publications = build_publications(doi = doi_info,
-                                                                 citation = author_info)
-)
-
-
-write_stac(collection, file.path(getwd(),'output.json'))
-
