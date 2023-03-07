@@ -31,9 +31,10 @@ landing_page_url <- 'https://projects.ecoforecast.org/neon4cast-catalog/aquatics
 #neon4cast-forecasts/parquet/aquatics/model_id=flareGLM/reference_datetime=2023-02-24
 
 theme <- "aquatics"
-reference_datetime <- '2023-02-24'
+reference_datetime <- '2023-02-22'
 site_id <- 'BARC'
 model_id <- 'flareGLM'
+#model_id <- 'GLEON_Chloe_precip'
 variable_name <- 'temperature'
 
 s3 <- arrow::s3_bucket(bucket = paste0("neon4cast-forecasts/parquet/",theme),  ## this will speed up if you use above path for forecast (subset within path)
@@ -42,8 +43,9 @@ s3 <- arrow::s3_bucket(bucket = paste0("neon4cast-forecasts/parquet/",theme),  #
 
 
 theme_df <- arrow::open_dataset(s3) %>%
-  filter(variable == variable_name, site_id == site_id, model_id == model_id, reference_datetime == reference_datetime) #%>% ##this used to just download data as quickly as possible -- need to revisit
-#collect()
+  filter(variable == variable_name, site_id == site_id, model_id == model_id, reference_datetime == reference_datetime) %>% ##this used to just download data as quickly as possible -- need to revisit
+  #filter(model_id == model_id, reference_datetime == reference_datetime) %>% ##this used to just download data as quickly as possible -- need to revisit
+  collect()
 
 date_extent <-  arrow::open_dataset(s3) %>%
     summarise(min = min(date),
