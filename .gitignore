@@ -19,6 +19,7 @@
 
 # RStudio files
 .Rproj.user/
+output.json
 
 # produced vignettes
 vignettes/*.html
