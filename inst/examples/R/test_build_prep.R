@@ -43,7 +43,7 @@ s3 <- arrow::s3_bucket(bucket = paste0("neon4cast-forecasts/parquet/",theme),  #
 
 
 theme_df <- arrow::open_dataset(s3) |> #%>%
-  tidyverse::filter(variable == variable_name, site_id == site_id, model_id == model_id, reference_datetime == reference_datetime) # |> %>% ##this used to just download data as quickly as possible -- need to revisit
+  dplyr::filter(variable == variable_name, site_id == site_id, model_id == model_id, reference_datetime == reference_datetime) # |> %>% ##this used to just download data as quickly as possible -- need to revisit
   #filter(model_id == model_id, reference_datetime == reference_datetime) |> #%>% ##this used to just download data as quickly as possible -- need to revisit
   #collect()
 
