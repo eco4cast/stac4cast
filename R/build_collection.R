@@ -102,8 +102,8 @@ return(links_list)
 #' @examples
 build_assets <- function(thumbnail = build_thumbnail(), parquet_items = build_parquet()){ ## come back to later
 
-  assets_list <- list(thumbnail = thumbnail,
-                     parquet_items = parquet_items)
+  assets_list <- list(thumbnail = list(thumbnail),
+                     parquet_items = list(parquet_items))
 
   return(assets_list)
 }
