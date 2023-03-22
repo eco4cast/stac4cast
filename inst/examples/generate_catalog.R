@@ -95,8 +95,8 @@ collection <- build_collection(id = id_info,
                                                      lat_max = 90,
                                                      lon_min = -180,
                                                      lon_max = 180,
-                                                     min_date = '2022-01-01', ##come back to the date values -- need to extract this automatically
-                                                     max_date = Sys.Date()),
+                                                     min_date = min_date,
+                                                     max_date = max_date,
                                keywords = build_keywords(keyword_input),
                                providers = build_providers(data_url = 'https://data.ecoforecst.org',
                                                            data_name = 'Ecoforecast Data',
@@ -110,7 +110,7 @@ collection <- build_collection(id = id_info,
                                extensions = stac_extensions,
                                publications = build_publications(doi = doi_info,
                                                                  citation = author_info)
-)
+))
 
 
 write_stac(collection, file.path(getwd(),'output.json'))

@@ -248,7 +248,7 @@ build_table_columns <- function(data_object,description_df){
     list_items <- strsplit(full_string_list[i],': ')[[1]]
     col_list <- list(name = list_items[1],
                      type = list_items[2],
-                     description = description_df[1,i])
+                     description = description_df[1,list_items[1]])
 
     init_list[[i]] <- col_list
 
