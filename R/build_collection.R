@@ -292,6 +292,33 @@ write_stac <- function(collection_object, path, ...){
 }
 
 
+#' Create and save JSON file for collection
+#'
+#' @param json_url url for the json file that is being validated
+#' @param ... any additional arguments can be used here
+#'
+#' @return
+#' @export
+#'
+#' @examples
+validate_json <- function(json_url){
+  library(reticulate)
+  reticulate::py_install('stac-validator')
+
+  stac <- reticulate::import("stac_validator", as="stac")
+
+  out = stac$stac_validator$StacValidate(json_url,extensions=TRUE)
+
+  if (out$run() == TRUE){
+    message('JSON Valid')
+  }else{
+    message('JSON Invalid')
+    message(paste('Error Type:',out$message[[1]]$error_type))
+    message(paste('Error Message:',out$message[[1]]$error_message))
+  }
+}
+
+
 # build_summaries <- function(){
 #
 #   test_list <- list()
