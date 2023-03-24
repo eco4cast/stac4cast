@@ -2,6 +2,12 @@ library(jsonlite)
 library(tidyverse)
 library(arrow)
 
+library(devtools)
+#install_github("eco4cast/stac4cast")
+install_github("addelany/stac4cast")
+library(stac4cast)
+
+lake_directory <- here::here()
 
 #source('/home/rstudio/stac4cast/R/build_collection.R')
 
@@ -32,12 +38,12 @@ landing_page_url <- 'https://projects.ecoforecast.org/neon4cast-catalog/aquatics
 
 theme <- "aquatics"
 reference_datetime <- '2023-02-22'
-site_id <- 'BARC'
+#site_id <- 'BARC'
 model_id <- 'flareGLM'
-#model_id <- 'GLEON_Chloe_precip'
-variable_name <- 'temperature'
+#variable_name <- 'temperature'
 
-s3 <- arrow::s3_bucket(bucket = paste0("neon4cast-forecasts/parquet/",theme),  ## this will speed up if you use above path for forecast (subset within path)
+
+s3 <- arrow::s3_bucket(bucket = paste0("neon4cast-forecasts/parquet/",theme),
                        endpoint_override = "data.ecoforecast.org",
                        anonymous = TRUE)
 
@@ -57,43 +63,84 @@ for (i in seq.int(1,length(models))){
 
 }
 
-max_date_value <- max(max_dates)
-min_date_value <- min(min_dates)
+max_date_value <- paste0(max(max_dates),' 00:00 Z')
+min_date_value <- paste0(min(min_dates),' 00:00 Z')
 
 site_data <- readr::read_csv("https://raw.githubusercontent.com/eco4cast/neon4cast-targets/main/NEON_Field_Site_Metadata_20220412.csv") |>
-  filter(aquatics == 1)
+  dplyr::filter(aquatics == 1)
 
 lat_bbox <- c(min(site_data$field_latitude), max(site_data$field_latitude))
 lon_bbox <- c(min(site_data$field_longitude), max(site_data$field_longitude))
 
-# theme_df <- arrow::open_dataset(s3) |> #%>%
-#   dplyr::filter(variable == variable_name, site_id == site_id, model_id == model_id, reference_datetime == reference_datetime) # |> %>% ##this used to just download data as quickly as possible -- need to revisit
-#   #filter(model_id == model_id, reference_datetime == reference_datetime) |> #%>% ##this used to just download data as quickly as possible -- need to revisit
-#   #collect()
-#
-#   #date_extent <-  arrow::open_dataset(s3) %>%
-#   #summarise(min = min(date),
-#   #max = max(date)) %>%
-#   #collect()
 
-description_create <- data.frame(target_id = 'unique identifier used for model target data',
-                                  datetime = 'ISO 8601(ISO 2019)datetime being predicted; follows CF conventionhttp://cfconventions.org/cf-conventions/cf-conventions.html#time-coordinate. This variable was called time before v0.5 of the EFIconvention. For time-integrated variables (e.g., cumulative net primary productivity), one should specify thestart_datetime and end_datetime as two variables, instead of the single datetime. If this is not provided the date timeis assumed to be the MIDPOINT of the integration period.',
-                                  parameter = 'ensemble member',
-                                  variable = 'aquatic forecast variable',
-                                  prediction = 'predicted forecast value',
-                                  family = 'For ensembles: “ensemble.” Default value if unspecified For probability distributions: Name of the statistical distribution associated with the reported statistics. The “sample” distribution is synonymous with “ensemble.” For summary statistics: “summary.” If this dimension does not vary, it is permissible to specify family as avariable attribute if the file format being used supports this (e.g.,netCDF).',
-                                  site_id = 'For forecasts that are not on a spatial grid, use of a site dimension that maps to a more detailed geometry (points, polygons, etc.) is allowable. In general this would be documented in the external metadata (e.g., a look-up table that provides lon and lat); however in netCDF this could be handled by the CF Discrete Sampling Geometry data model.',
-                                  model_id = 'unique identifier for the model used in the forecast',
-                                  reference_datetime = 'ISO 8601(ISO 2019) datetime the forecast starts from (a.k.a. issue time); Only needed if more than one reference_datetime is stored in a single file. Forecast lead time is thus datetime-reference_datetime. In a hindcast the reference_datetime will be earlier than the time the hindcast was actually produced (see pubDate in Section3). Datetimes are allowed to be earlier than the reference_datetime if are analysis/reforecast is run before the start of the forecast period. This variable was called start_time before v0.5 of theEFI standard.',
-                                  date = 'ISO 8601(ISO 2019) datetime being predicted; follows CF convention http://cfconventions.org/cf-conventions/cf-conventions.html#time-coordinate. This variable was called time before v0.5 of the EFI convention. For time-integrated variables (e.g., cumulative net primary productivity), one should specify the start_datetime and end_datetime as two variables, instead of the single datetime.If this is not provided the datetime is assumed to be the MIDPOINT of theintegrationperiod.'
-                                   #observation = 'observational data',
-                                   #crps = 'crps forecast score',
-                                   #logs = 'logs forecast score',
-                                   #mean = 'mean forecast prediction for all ensemble members',
-                                   #mediam = 'median forecast prediction for all ensemble members',
-                                   #sd = 'standard deviation of all enemble member forecasts',
-                                   #quantile97.5 = 'upper 97.5 percentile value of ensemble member forecasts',
-                                   #quantile02.5 = 'upper 2.5 percentile value of ensemble member forecasts',
-                                   #quantile90 = 'upper 90 percentile value of ensemble member forecasts',
-                                   #quantile10 = 'upper 10 percentile value of ensemble member forecasts',
-  )
+
+# s3 <- arrow::s3_bucket(bucket = paste0("neon4cast-forecasts/parquet/",theme),  ## this will speed up if you use above path for forecast (subset within path)
+#                        endpoint_override = "data.ecoforecast.org",
+#                        anonymous = TRUE)
+
+theme_df <- arrow::open_dataset(s3) %>%
+  #filter(variable == variable_name, site_id == site_id, model_id == model_id, reference_datetime == reference_datetime) %>% ##this used to just download data as quickly as possible -- need to revisit
+  filter(model_id == model_id, reference_datetime == reference_datetime) #%>% ##this used to just download data as quickly as possible -- need to revisit
+  #collect()
+#
+#   date_extent <-  arrow::open_dataset(s3) %>%
+#   summarise(min = min(date),
+#             max = max(date)) %>%
+#   collect()
+
+data_vars <- 'aquatic vars' ##fill this in with a list of actual variable names
+
+description_create <- data.frame(target_id = 'unique identifier for target data used in the forecast',
+                                 datetime = 'ISO 8601(ISO 2019)datetime the forecast starts from (a.k.a. issue time); Only needed if more than one reference_datetime is stored in asingle file. Forecast lead time is thus datetime-reference_datetime. Ina hindcast the reference_datetimewill be earlierthan the time thehindcast was actually produced (seepubDatein Section3). Datetimesare allowed to be earlier than thereference_datetimeif areanalysis/reforecast is run before the start of the forecast period. Thisvariable was calledstart_timebefore v0.5 of theEFI standard.',
+                                 site_id = 'For forecasts that are not on a spatial grid, use of a site dimension thatmaps to a more detailed geometry (points, polygons, etc.) is allowable.In general this would be documented in the external metadata (e.g., alook-up table that provides lon and lat); however in netCDF this couldbe handled by the CF Discrete Sampling Geometry data model.',
+                                 family = 'For ensembles: “ensemble.” Default value if unspecifiedFor probability distributions: Name of the statistical distributionassociated with the reported statistics. The “sample” distribution issynonymous with “ensemble.”For summary statistics: “summary.”If this dimension does not vary, it is permissible to specifyfamilyas avariable attribute if the file format being used supports this (e.g.,netCDF).',
+                                 parameter = 'ensemble member',
+                                 variable = paste('aquatic forecast variables:',data_vars),
+                                 prediction = 'predicted forecast value',
+                                 date = 'ISO 8601(ISO 2019)datetime being predicted; follows CF conventionhttp://cfconventions.org/cf-conventions/cf-conventions.html#time-coordinate. This variable was called time before v0.5of the EFIconvention.For time-integrated variables (e.g., cumulative net primary productivity), one should specify thestart_datetimeandend_datetimeas two variables, instead of the singledatetime.If this is not providedthedatetimeis assumed to be the MIDPOINT of theintegrationperiod.',
+                                 model_id = 'unique identifier for the model used in the forecast',
+                                 reference_datetime = 'ISO 8601(ISO 2019)datetime the forecast starts from (a.k.a. issue time); Only needed if more than one reference_datetime is stored in asingle file. Forecast lead time is thus datetime-reference_datetime. Ina hindcast the reference_datetimewill be earlierthan the time thehindcast was actually produced (seepubDatein Section3). Datetimesare allowed to be earlier than thereference_datetimeif areanalysis/reforecast is run before the start of the forecast period. Thisvariable was calledstart_timebefore v0.5 of theEFI standard.'
+                                 #date = 'ISO 8601(ISO 2019)datetime being predicted; follows CF conventionhttp://cfconventions.org/cf-conventions/cf-conventions.html#time-coordinate. This variable was called time before v0.5of the EFIconvention.For time-integrated variables (e.g., cumulative net primary productivity), one should specify thestart_datetimeandend_datetimeas two variables, instead of the singledatetime.If this is not providedthedatetimeis assumed to be the MIDPOINT of theintegrationperiod.'
+                                 #observation = 'observational data',
+                                 #crps = 'crps forecast score',
+                                 #logs = 'logs forecast score',
+                                 #mean = 'mean forecast prediction for all ensemble members',
+                                 #mediam = 'median forecast prediction for all ensemble members',
+                                 #sd = 'standard deviation of all enemble member forecasts',
+                                 #quantile97.5 = 'upper 97.5 percentile value of ensemble member forecasts',
+                                 #quantile02.5 = 'upper 2.5 percentile value of ensemble member forecasts',
+                                 #quantile90 = 'upper 90 percentile value of ensemble member forecasts',
+                                 #quantile10 = 'upper 10 percentile value of ensemble member forecasts',
+)
+
+
+##### BUILD COLLECTION BY CALLING FUNCTION
+collection <- stac4cast::build_collection(id = id_info,
+                               links = stac4cast::build_links(href_link = parent_url,
+                                                   cite_doi = doi_info,
+                                                   landing_page = landing_page_url),
+                               title = title_info,
+                               assets = stac4cast::build_assets(thumbnail = stac4cast::build_thumbnail(href = 'https://ecoforecast.org/wp-content/uploads/2019/12/EFI_Logo-1.jpg', title = 'EFI Logo'),
+                                                     parquet_items = stac4cast::build_parquet(href = 'https://data.ecoforecst.org/forecasts/parquet/aquatics',
+                                                                                   title = 'Parquet STAC Items',
+                                                                                   description = 'Placeholder description for parquet items')),
+                               extent = stac4cast::build_extent(lat_min = lat_bbox[1],
+                                                     lat_max = lat_bbox[2],
+                                                     lon_min = lon_bbox[1],
+                                                     lon_max = lon_bbox[2],
+                                                     min_date = min_date_value,
+                                                     max_date = max_date_value),
+                               keywords = stac4cast::build_keywords(keyword_input),
+                               providers = stac4cast::build_providers(data_url = 'https://data.ecoforecst.org',
+                                                                                 data_name = 'Ecoforecast Data',
+                                                                                 host_url = 'https://ecoforecst.org',
+                                                                                 host_name = 'Ecoforecast'),
+                              summaries = NULL,
+                              description = description_info,
+                              item_assets = NULL,
+                              table_columns = stac4cast::build_table_columns(data_object = theme_df,
+                                                                                         description_df = description_create),
+                              extensions = stac_extensions,
+                              publications = stac4cast::build_publications(doi = doi_info,
+                                                                                       citation = author_info)
+                               )
