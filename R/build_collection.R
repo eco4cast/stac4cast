@@ -78,7 +78,7 @@ build_collection <- function(id,
 build_links <- function(href_link, cite_doi = NULL, landing_page){ # this needs to be more flexible in the future -- for loop or similar
 
 
-links_list <- list(list(rel = "items", type = NA, href = paste0(href_link,'/api/stac/v1/collections/eco4cast/items')),
+links_list <- list(list(rel = "items", type = "application/json", href = paste0(href_link,'/api/stac/v1/collections/eco4cast/items')),
                    list(rel = "parent", type = "application/json", href = paste0(href_link,'/api/stac/v1')),
                    list(rel = "root", type = "application/json", href = paste0(href_link,'/api/stac/v1')),
                    list(rel = "self", type = "application/json", href = paste0(href_link,'/api/stac/v1/collections/eco4cast')),
@@ -102,8 +102,8 @@ return(links_list)
 #' @examples
 build_assets <- function(thumbnail = build_thumbnail(), parquet_items = build_parquet()){ ## come back to later
 
-  assets_list <- list(thumbnail = list(thumbnail),
-                     parquet_items = list(parquet_items))
+  assets_list <- list(thumbnail = thumbnail,
+                     parquet_items = parquet_items)
 
   return(assets_list)
 }
@@ -122,7 +122,7 @@ build_thumbnail <- function(href,title){ #assuming thubmail is an image
 
   thumbnail_list <- list(href = href,
                          type = "image/JPEG",
-                         roles = list('0' = "thumbnail"),
+                         roles = list("thumbnail"),
                          title = title)
   return(thumbnail_list)
 }
@@ -167,13 +167,13 @@ build_extent <- function(lat_min, lat_max, lon_min, lon_max, min_date, max_date)
   if (is.null(max_date)){
     temporal_list <- list(min_date,'null')
   }else{
-    temporal_list <- list(min_date, max_date)
+    temporal_list <- list(list(min_date, max_date))
   }
 
-  bbox_list <- list(lon_min,
+  bbox_list <- list(list(lon_min,
                     lat_min,
                     lon_max,
-                    lat_max)
+                    lat_max))
 
   extent_list <- list(spatial = list(bbox = bbox_list),
                       temporal = list(interval = temporal_list))
@@ -268,8 +268,8 @@ build_table_columns <- function(data_object,description_df){
 #' @examples
 build_publications <- function(doi,citation){
 
-  pub_list <- list(list(doi = doi,
-                   citation = citation))
+  pub_list <- list(doi = doi,
+                   citation = citation)
 
 
   return(pub_list)
