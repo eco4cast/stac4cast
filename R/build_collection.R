@@ -78,7 +78,7 @@ build_collection <- function(id,
 build_links <- function(href_link, cite_doi = NULL, landing_page){ # this needs to be more flexible in the future -- for loop or similar
 
 
-links_list <- list(list(rel = "items", type = NA, href = paste0(href_link,'/api/stac/v1/collections/eco4cast/items')),
+links_list <- list(list(rel = "items", type = "application/json", href = paste0(href_link,'/api/stac/v1/collections/eco4cast/items')),
                    list(rel = "parent", type = "application/json", href = paste0(href_link,'/api/stac/v1')),
                    list(rel = "root", type = "application/json", href = paste0(href_link,'/api/stac/v1')),
                    list(rel = "self", type = "application/json", href = paste0(href_link,'/api/stac/v1/collections/eco4cast')),
@@ -122,7 +122,7 @@ build_thumbnail <- function(href,title){ #assuming thubmail is an image
 
   thumbnail_list <- list(href = href,
                          type = "image/JPEG",
-                         roles = list('0' = "thumbnail"),
+                         roles = list("thumbnail"),
                          title = title)
   return(thumbnail_list)
 }
@@ -167,13 +167,13 @@ build_extent <- function(lat_min, lat_max, lon_min, lon_max, min_date, max_date)
   if (is.null(max_date)){
     temporal_list <- list(min_date,'null')
   }else{
-    temporal_list <- list(min_date, max_date)
+    temporal_list <- list(list(min_date, max_date))
   }
 
-  bbox_list <- list(lon_min,
+  bbox_list <- list(list(lon_min,
                     lat_min,
                     lon_max,
-                    lat_max)
+                    lat_max))
 
   extent_list <- list(spatial = list(bbox = bbox_list),
                       temporal = list(interval = temporal_list))
@@ -248,7 +248,7 @@ build_table_columns <- function(data_object,description_df){
     list_items <- strsplit(full_string_list[i],': ')[[1]]
     col_list <- list(name = list_items[1],
                      type = list_items[2],
-                     description = description_df[1,i])
+                     description = description_df[1,list_items[1]])
 
     init_list[[i]] <- col_list
 
@@ -268,8 +268,8 @@ build_table_columns <- function(data_object,description_df){
 #' @examples
 build_publications <- function(doi,citation){
 
-  pub_list <- list(list(doi = doi,
-                   citation = citation))
+  pub_list <- list(doi = doi,
+                   citation = citation)
 
 
   return(pub_list)
@@ -289,6 +289,33 @@ build_publications <- function(doi,citation){
 write_stac <- function(collection_object, path, ...){
   compact_collection <- purrr::compact(collection_object)
   jsonlite::write_json(compact_collection, path, pretty = TRUE, auto_unbox = TRUE)
+}
+
+
+#' Create and save JSON file for collection
+#'
+#' @param json_url url for the json file that is being validated
+#' @param ... any additional arguments can be used here
+#'
+#' @return
+#' @export
+#'
+#' @examples
+validate_json <- function(json_url){
+  library(reticulate)
+  reticulate::py_install('stac-validator')
+
+  stac <- reticulate::import("stac_validator", as="stac")
+
+  out = stac$stac_validator$StacValidate(json_url,extensions=TRUE)
+
+  if (out$run() == TRUE){
+    message('JSON Valid')
+  }else{
+    message('JSON Invalid')
+    message(paste('Error Type:',out$message[[1]]$error_type))
+    message(paste('Error Message:',out$message[[1]]$error_message))
+  }
 }
 
 
