@@ -4,14 +4,31 @@
 \alias{build_links}
 \title{Build the Links field for a collection}
 \usage{
-build_links(href_link, cite_doi = NULL, landing_page)
+build_links(
+  root,
+  items = file.path(root, "items.json"),
+  parent = root,
+  self = root,
+  doi = NULL,
+  license = "https://creativecommons.org/publicdomain/zero/1.0/",
+  about = NULL
+)
 }
 \arguments{
-\item{href_link}{The actual link in the format of an URL. Relative and absolute links are both allowed.}
+\item{root}{The actual link in the format of an URL.
+Relative and absolute links are both allowed.}
 
-\item{cite_doi}{optional argument to be used in the cite-as link object}
+\item{items}{relative to root, path to items.json}
 
-\item{landing_page}{a URL for describing the relevant organization or group for the collection}
+\item{parent}{relative to root, path to parent of self}
+
+\item{self}{relative to root, path to self}
+
+\item{doi}{optional argument to be used in the cite-as link object}
+
+\item{license}{URL of license}
+
+\item{about}{a URL for describing the relevant organization or group for the collection}
 }
 \description{
 Build the Links field for a collection

@@ -18,11 +18,13 @@ stac_validate <- function(x){
 
   out = stac$stac_validator$StacValidate(x,extensions=TRUE)
 
-  if (out$run()){
-    return(TRUE)
+  if (out$run()) {
+    message("file is valid STAC JSON")
+    return(invisible(TRUE))
   }else{
     message('Schema validation found the following issues')
     message(paste('Error Type:',out$message[[1]]$error_type))
     message(paste('Error Message:',out$message[[1]]$error_message))
+    return(invisible(FALSE))
   }
 }

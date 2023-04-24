@@ -5,19 +5,24 @@
 #' @param id unique identifier for the collection
 #' @param type always set to "Collection" for collection items
 #' @param stac_version version of STAC to implement
-#' @param license collection license
+#' @param license collection license. Best to use an SPDX identifier format, <https://spdx.org/licenses/>
 #' @param links list of related objects and their relation relationships
 #' @param title short title for the collection
 #' @param assets dictionary of asset objects that can be downloaded
 #' @param extent spatial and temporal extents
 #' @param keywords list of keywords describing the collection
-#' @param providers all organizations capturing or processing the data or the hosting provider
-#' @param summaries a map of property summaries, either a set of values, a range of values or a JSON schema
-#' @param description detailed multi-line description to fully explain the collection
-#' @param item_assets an optional dictionary of asset objects associated with the collection that can be downloaded or streamed, each with a unique key
+#' @param providers all organizations capturing or processing the data or the
+#'  hosting provider
+#' @param summaries a map of property summaries, either a set of values, a
+#;  range of values or a JSON schema
+#' @param description detailed multi-line description to fully explain
+#'  the collection
+#' @param item_assets an optional dictionary of asset objects associated with
+#'  the collection that can be downloaded or streamed, each with a unique key
 #' @param table_columns column names, type, and description for data table
 #' @param extensions a list of extensions the collection implements
-#' @param publications list of relevant publication information for the collection
+#' @param publications list of relevant publication information for the
+#'  collection
 #'
 #' @return a collection list object
 #' @export
@@ -25,7 +30,7 @@
 build_collection <- function(id,
                              type = 'Collection',
                              stac_version = '1.0.0',
-                             license = 'proprietary',
+                             license = 	"CC0-1.0",
                              links = build_links(),
                              title = NULL,
                              assets = NULL,
@@ -64,25 +69,37 @@ build_collection <- function(id,
 
 #' Build the Links field for a collection
 #'
-#' @param href_link The actual link in the format of an URL. Relative and absolute links are both allowed.
-#' @param cite_doi optional argument to be used in the cite-as link object
-#' @param landing_page a URL for describing the relevant organization or group for the collection
-#'
+#' @param root The actual link in the format of an URL.
+#'  Relative and absolute links are both allowed.
+#' @param items relative to root, path to items.json
+#' @param self relative to root, path to self
+#' @param parent relative to root, path to parent of self
+#' @param doi optional argument to be used in the cite-as link object
+#' @param about a URL for describing the relevant organization or group for the collection
+#' @param license URL of license
 #' @export
 #'
-build_links <- function(href_link, cite_doi = NULL, landing_page){ # this needs to be more flexible in the future -- for loop or similar
-
-
-links_list <- list(list(rel = "items", type = "application/json", href = paste0(href_link,'/api/stac/v1/collections/eco4cast/items')),
-                   list(rel = "parent", type = "application/json", href = paste0(href_link,'/api/stac/v1')),
-                   list(rel = "root", type = "application/json", href = paste0(href_link,'/api/stac/v1')),
-                   list(rel = "self", type = "application/json", href = paste0(href_link,'/api/stac/v1/collections/eco4cast')),
-                   list(rel = "cite-as", href = cite_doi),
-                   list(rel = "about", href = landing_page, type = 'text/html', title = 'Organization Landing Page'),
-                   #list(rel = "license", href = NA, type = NA, title = NA),
-                   list(rel = "describedby", href = landing_page, title = 'Organization Landing Page',type = 'text/html'))
-
-return(links_list)
+build_links <- function(root,
+                        items = file.path(root, "items.json"),
+                        parent = root,
+                        self = root,
+                        doi = NULL,
+                        license = "https://creativecommons.org/publicdomain/zero/1.0/",
+                        about = NULL,
+                        example = NULL){
+links_list <- list(list(rel = "items", type = "application/json", href = items),
+                   list(rel = "parent", type = "application/json", href = parent),
+                   list(rel = "root", type = "application/json", href = root),
+                   list(rel = "self", type = "application/json", href = self),
+                   list(rel = "cite-as", href = doi),
+                   list(rel = "about", href = about, type = 'text/html',
+                        title = 'Organization Homepage'),
+                   list(rel = "license", href = license, type = 'text/html',
+                        title = "public domain"),
+                   list(rel = "describedby", href = example,
+                        title = 'Example Notebook',type = 'text/html'))
+  # FIXME drop whole link element for any entries for which href is NULL
+  return(links_list)
 }
 
 
@@ -93,7 +110,8 @@ return(links_list)
 #'
 #' @export
 #'
-build_assets <- function(thumbnail = build_thumbnail(), parquet_items = build_parquet()){ ## come back to later
+build_assets <- function(thumbnail = build_thumbnail(),
+                         parquet_items = build_parquet()){ ## come back to later
 
   assets_list <- list(thumbnail = thumbnail,
                      parquet_items = parquet_items)
@@ -149,12 +167,19 @@ build_parquet <- function(href, title = NULL, description = NULL){ #assuming a p
 #'
 #' @export
 #'
-build_extent <- function(lat_min, lat_max, lon_min, lon_max, min_date, max_date){ ##if data through present then set max_date = NULL
+build_extent <- function(lat_min, lat_max, lon_min, lon_max,
+                         min_date, max_date) {
 
+  dt_format <- function(x){
+    x <- as.POSIXlt(x)
+    format(x, "%Y-%m-%dT%H:%M:%SZ")
+  }
+  # if data through present then set max_date = NULL
   if (is.null(max_date)){
-    temporal_list <- list(min_date,'null')
-  }else{
-    temporal_list <- list(list(min_date, max_date))
+    temporal_list <- list(dt_format(min_date),'null')
+  } else {
+    temporal_list <- list(list(dt_format(min_date),
+                               dt_format(max_date)))
   }
 
   bbox_list <- list(list(lon_min,
@@ -169,17 +194,7 @@ build_extent <- function(lat_min, lat_max, lon_min, lon_max, min_date, max_date)
 }
 
 
-#' Build keywords object for collection
-#'
-#' @param keywords list of keywords to be describe the collection
-#'
-#' @export
-build_keywords <- function(keywords){
 
-  keyword_list <- as.list(keywords)
-
-  return(keyword_list)
-}
 
 
 #' Build providers object for the collection

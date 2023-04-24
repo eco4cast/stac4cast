@@ -3,7 +3,6 @@
 export(build_assets)
 export(build_collection)
 export(build_extent)
-export(build_keywords)
 export(build_links)
 export(build_parquet)
 export(build_providers)

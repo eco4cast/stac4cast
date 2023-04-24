@@ -37,15 +37,17 @@ model_id <- 'flareGLM'
 #model_id <- 'GLEON_Chloe_precip'
 variable_name <- 'temperature'
 
-s3 <- arrow::s3_bucket(bucket = paste0("neon4cast-forecasts/parquet/",theme),  ## this will speed up if you use above path for forecast (subset within path)
-                       endpoint_override = "data.ecoforecast.org",
-                       anonymous = TRUE)
+s3 <- arrow::s3_bucket(
+  bucket = glue::glue("neon4cast-forecasts/parquet/{theme}/",
+                      "model_id={model_id}/",
+                      "reference_datetime={reference_datetime}/"),
+  endpoint_override = "data.ecoforecast.org",
+  anonymous = TRUE)
 
-
+library(dplyr)
 theme_df <- arrow::open_dataset(s3) %>%
-  filter(variable == variable_name, site_id == site_id, model_id == model_id, reference_datetime == reference_datetime) %>% ##this used to just download data as quickly as possible -- need to revisit
-  #filter(model_id == model_id, reference_datetime == reference_datetime) %>% ##this used to just download data as quickly as possible -- need to revisit
-  #collect()
+  filter(variable == variable_name, site_id == site_id) %>% ##this used to just download data as quickly as possible -- need to revisit
+  collect()
 
 date_extent <-  arrow::open_dataset(s3) %>%
     summarise(min = min(date),
@@ -97,7 +99,7 @@ collection <- build_collection(id = id_info,
                                                      lon_max = 180,
                                                      min_date = min_date,
                                                      max_date = max_date,
-                               keywords = build_keywords(keyword_input),
+                               keywords = as.list(keyword_input),
                                providers = build_providers(data_url = 'https://data.ecoforecst.org',
                                                            data_name = 'Ecoforecast Data',
                                                            host_url = 'https://ecoforecst.org',

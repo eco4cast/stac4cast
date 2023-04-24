@@ -8,7 +8,7 @@ build_collection(
   id,
   type = "Collection",
   stac_version = "1.0.0",
-  license = "proprietary",
+  license = "CC0-1.0",
   links = build_links(),
   title = NULL,
   assets = NULL,
@@ -30,7 +30,7 @@ build_collection(
 
 \item{stac_version}{version of STAC to implement}
 
-\item{license}{collection license}
+\item{license}{collection license. Best to use an SPDX identifier format, \url{https://spdx.org/licenses/}}
 
 \item{links}{list of related objects and their relation relationships}
 
@@ -42,19 +42,23 @@ build_collection(
 
 \item{keywords}{list of keywords describing the collection}
 
-\item{providers}{all organizations capturing or processing the data or the hosting provider}
+\item{providers}{all organizations capturing or processing the data or the
+hosting provider}
 
-\item{summaries}{a map of property summaries, either a set of values, a range of values or a JSON schema}
+\item{summaries}{a map of property summaries, either a set of values, a}
 
-\item{description}{detailed multi-line description to fully explain the collection}
+\item{description}{detailed multi-line description to fully explain
+the collection}
 
-\item{item_assets}{an optional dictionary of asset objects associated with the collection that can be downloaded or streamed, each with a unique key}
+\item{item_assets}{an optional dictionary of asset objects associated with
+the collection that can be downloaded or streamed, each with a unique key}
 
 \item{table_columns}{column names, type, and description for data table}
 
 \item{extensions}{a list of extensions the collection implements}
 
-\item{publications}{list of relevant publication information for the collection}
+\item{publications}{list of relevant publication information for the
+collection}
 }
 \value{
 a collection list object

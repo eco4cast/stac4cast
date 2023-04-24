@@ -28,7 +28,7 @@ stac_extensions <- list("https://stac-extensions.github.io/scientific/v1.0.0/sch
                         "https://stac-extensions.github.io/table/v1.2.0/schema.json")
 
 
-parent_url <- 'https://data.ecoforecst.org/forecasts/parquet/aquatics'
+parent_url <- 'https://data.ecoforecast.org/neon4cast-forecasts/parquet/aquatics'
 landing_page_url <- 'https://projects.ecoforecast.org/neon4cast-catalog/aquatics-catalog.html'
 
 ## initialize dataframes for table metadata and column descriptions
@@ -120,7 +120,7 @@ collection <- stac4cast::build_collection(id = id_info,
                                                    landing_page = landing_page_url),
                                title = title_info,
                                assets = stac4cast::build_assets(thumbnail = stac4cast::build_thumbnail(href = 'https://ecoforecast.org/wp-content/uploads/2019/12/EFI_Logo-1.jpg', title = 'EFI Logo'),
-                                                     parquet_items = stac4cast::build_parquet(href = 'https://data.ecoforecst.org/forecasts/parquet/aquatics',
+                                                     parquet_items = stac4cast::build_parquet(href = 'https://data.ecoforecast.org/neon4cast-forecasts/parquet/aquatics',
                                                                                    title = 'Parquet STAC Items',
                                                                                    description = 'Placeholder description for parquet items')),
                                extent = stac4cast::build_extent(lat_min = lat_bbox[1],
