@@ -11,7 +11,8 @@ build_links(
   self = root,
   doi = NULL,
   license = "https://creativecommons.org/publicdomain/zero/1.0/",
-  about = NULL
+  about = NULL,
+  example = NULL
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ Relative and absolute links are both allowed.}
 \item{license}{URL of license}
 
 \item{about}{a URL for describing the relevant organization or group for the collection}
+
+\item{example}{URL of an example notebook}
 }
 \description{
 Build the Links field for a collection

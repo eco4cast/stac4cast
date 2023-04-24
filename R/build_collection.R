@@ -77,6 +77,7 @@ build_collection <- function(id,
 #' @param doi optional argument to be used in the cite-as link object
 #' @param about a URL for describing the relevant organization or group for the collection
 #' @param license URL of license
+#' @param example URL of an example notebook
 #' @export
 #'
 build_links <- function(root,
