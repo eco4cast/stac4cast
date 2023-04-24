@@ -8,13 +8,11 @@ Description: This package creates and transforms metadata for ecological forecas
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
-    purrr,
-    jsonlite,
-    here,
-    arrow,
-    tidyverse
+    jsonlite
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Suggests: 
+    arrow,
+    reticulate,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

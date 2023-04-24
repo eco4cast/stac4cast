@@ -3,9 +3,8 @@ test_that("collection builds correctly", {
 
   #template_folder <- system.file("example", package = "stac4cast")
   #source(file.path(template_folder, "R/test_build_prep.R"))
-  here_dir <- here::here()
 
-  source(file.path(here_dir,"inst/examples/R/test_build_prep.R"))
+  source(system.file("examples/R/test_build_prep.R", package="stac4cast"))
 
   collection_out <- stac4cast::build_collection(id = id_info,
                  links = build_links(href_link = parent_url,

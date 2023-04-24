@@ -19,10 +19,9 @@
 #' @param extensions a list of extensions the collection implements
 #' @param publications list of relevant publication information for the collection
 #'
-#' @return
+#' @return a collection list object
 #' @export
 #'
-#' @examples
 build_collection <- function(id,
                              type = 'Collection',
                              stac_version = '1.0.0',
@@ -58,9 +57,7 @@ build_collection <- function(id,
                           publications = publications
   )
 
-  ## WRITE COLLECTION LIST INTO JSON FORMAT
-
-  return(collection_list)
+  collection_list
 }
 
 
@@ -71,10 +68,8 @@ build_collection <- function(id,
 #' @param cite_doi optional argument to be used in the cite-as link object
 #' @param landing_page a URL for describing the relevant organization or group for the collection
 #'
-#' @return
 #' @export
 #'
-#' @examples
 build_links <- function(href_link, cite_doi = NULL, landing_page){ # this needs to be more flexible in the future -- for loop or similar
 
 
@@ -96,10 +91,8 @@ return(links_list)
 #' @param thumbnail list describing the thumbnail object(s) used in the collection
 #' @param parquet_items list describing the parquet object(s) used in the collection
 #'
-#' @return
 #' @export
 #'
-#' @examples
 build_assets <- function(thumbnail = build_thumbnail(), parquet_items = build_parquet()){ ## come back to later
 
   assets_list <- list(thumbnail = thumbnail,
@@ -114,10 +107,8 @@ build_assets <- function(thumbnail = build_thumbnail(), parquet_items = build_pa
 #' @param href the actual link in the format of an URL. Relative and absolute links are both allowed
 #' @param title optional title to be used in rendered displays of the link
 #'
-#' @return
 #' @export
 #'
-#' @examples
 build_thumbnail <- function(href,title){ #assuming thubmail is an image
 
   thumbnail_list <- list(href = href,
@@ -134,10 +125,8 @@ build_thumbnail <- function(href,title){ #assuming thubmail is an image
 #' @param title optional title to be used in rendered displays of the link
 #' @param description optional description for the parquet items
 #'
-#' @return
 #' @export
 #'
-#' @examples
 build_parquet <- function(href, title = NULL, description = NULL){ #assuming a parquet file
 
   parquet_list <- list(href = href,
@@ -158,10 +147,8 @@ build_parquet <- function(href, title = NULL, description = NULL){ #assuming a p
 #' @param min_date minimum date of data
 #' @param max_date maximum data of data
 #'
-#' @return
 #' @export
 #'
-#' @examples
 build_extent <- function(lat_min, lat_max, lon_min, lon_max, min_date, max_date){ ##if data through present then set max_date = NULL
 
   if (is.null(max_date)){
@@ -186,10 +173,7 @@ build_extent <- function(lat_min, lat_max, lon_min, lon_max, min_date, max_date)
 #'
 #' @param keywords list of keywords to be describe the collection
 #'
-#' @return
 #' @export
-#'
-#' @examples
 build_keywords <- function(keywords){
 
   keyword_list <- as.list(keywords)
@@ -205,10 +189,7 @@ build_keywords <- function(keywords){
 #' @param host_url URL for data host
 #' @param host_name name of data host
 #'
-#' @return
 #' @export
-#'
-#' @examples
 build_providers <- function(data_url, data_name, host_url, host_name){
 
   data_provider_list <- list(url = data_url,
@@ -232,10 +213,8 @@ build_providers <- function(data_url, data_name, host_url, host_name){
 #' @param data_object parquet object used to store data
 #' @param description_df dataframe of table column descriptions, one description for each column needed
 #'
-#' @return
 #' @export
 #'
-#' @examples
 build_table_columns <- function(data_object,description_df){
 
   full_string_list <- strsplit(data_object[[1]]$ToString(),'\n')[[1]]
@@ -262,10 +241,10 @@ build_table_columns <- function(data_object,description_df){
 #' @param doi doi for publications that are relevant to the collection
 #' @param citation full citation for publications that are relevant to the collection
 #'
-#' @return
+
 #' @export
 #'
-#' @examples
+
 build_publications <- function(doi,citation){
 
   pub_list <- list(doi = doi,
@@ -282,40 +261,19 @@ build_publications <- function(doi,citation){
 #' @param path relative or absolute path for the JSON file destination
 #' @param ... any additional arguments can be used here
 #'
-#' @return
+
 #' @export
 #'
-#' @examples
+
 write_stac <- function(collection_object, path, ...){
-  compact_collection <- purrr::compact(collection_object)
-  jsonlite::write_json(compact_collection, path, pretty = TRUE, auto_unbox = TRUE)
+  compact_collection <- compact(collection_object)
+  jsonlite::write_json(compact_collection, path,
+                       pretty = TRUE, auto_unbox = TRUE)
 }
 
 
-#' Create and save JSON file for collection
-#'
-#' @param json_url url for the json file that is being validated
-#' @param ... any additional arguments can be used here
-#'
-#' @return
-#' @export
-#'
-#' @examples
-validate_json <- function(json_url){
-  library(reticulate)
-  reticulate::py_install('stac-validator')
-
-  stac <- reticulate::import("stac_validator", as="stac")
-
-  out = stac$stac_validator$StacValidate(json_url,extensions=TRUE)
-
-  if (out$run() == TRUE){
-    message('JSON Valid')
-  }else{
-    message('JSON Invalid')
-    message(paste('Error Type:',out$message[[1]]$error_type))
-    message(paste('Error Message:',out$message[[1]]$error_message))
-  }
+compact <- function (l) {
+  Filter(Negate(is.null), l)
 }
 
 

@@ -1,10 +1,9 @@
 library(jsonlite)
 library(tidyverse)
 library(arrow)
-
 library(devtools)
-#install_github("eco4cast/stac4cast")
-install_github("addelany/stac4cast")
+# install_github("eco4cast/stac4cast")
+# install_github("addelany/stac4cast")
 library(stac4cast)
 
 lake_directory <- here::here()

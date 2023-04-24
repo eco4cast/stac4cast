@@ -56,6 +56,9 @@ build_collection(
 
 \item{publications}{list of relevant publication information for the collection}
 }
+\value{
+a collection list object
+}
 \description{
 Build full metadata collection
 }
