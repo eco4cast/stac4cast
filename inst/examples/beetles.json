@@ -5,17 +5,17 @@
     {
       "rel": "parent",
       "type": "application/json",
-      "href": "data.ecoforecast.org/neon4cast-catalog/stac/v1/catalog.json"
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/catalog.json"
     },
     {
       "rel": "root",
       "type": "application/json",
-      "href": "data.ecoforecast.org/neon4cast-catalog/stac/v1/catalog.json"
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/catalog.json"
     },
     {
       "rel": "self",
       "type": "application/json",
-      "href": "data.ecoforecast.org/neon4cast-catalog/stac/v1/colections/beetles.json"
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/colections/beetles.json"
     },
     {
       "rel": "cite-as",
