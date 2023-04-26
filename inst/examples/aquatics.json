@@ -1,0 +1,169 @@
+{
+  "id": "efi-aquatics",
+  "type": "Collection",
+  "links": [
+    {
+      "rel": "items",
+      "type": "application/json",
+      "href": "https://data.ecoforecst.org/forecasts/parquet/aquatics/api/stac/v1/collections/eco4cast/items"
+    },
+    {
+      "rel": "parent",
+      "type": "application/json",
+      "href": "https://data.ecoforecst.org/forecasts/parquet/aquatics/api/stac/v1"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "https://data.ecoforecst.org/forecasts/parquet/aquatics/api/stac/v1"
+    },
+    {
+      "rel": "self",
+      "type": "application/json",
+      "href": "https://data.ecoforecst.org/forecasts/parquet/aquatics/api/stac/v1/collections/eco4cast"
+    },
+    {
+      "rel": "cite-as",
+      "href": "https://www.doi.org/10.22541/essoar.167079499.99891914/v1"
+    },
+    {
+      "rel": "about",
+      "href": "https://projects.ecoforecast.org/neon4cast-catalog/aquatics-catalog.html",
+      "type": "text/html",
+      "title": "Organization Landing Page"
+    },
+    {
+      "rel": "describedby",
+      "href": "https://projects.ecoforecast.org/neon4cast-catalog/aquatics-catalog.html",
+      "title": "Organization Landing Page",
+      "type": "text/html"
+    }
+  ],
+  "title": "Ecological Forecasting Initiative - Aquatics Forecasts",
+  "assets": {
+    "thumbnail": {
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/img/neon_buoy.jpg",
+      "type": "image/JPEG",
+      "roles": [
+        "thumbnail"
+      ],
+      "title": "NEON Aquatics Buoy"
+    },
+    "parquet_items": {
+      "href": "https://data.ecoforecst.org/forecasts/parquet/aquatics",
+      "type": "application/x-parquet",
+      "roles": [
+        "stac-items"
+      ],
+      "title": "Parquet STAC Items",
+      "description": "Placeholder description for parquet items"
+    }
+  },
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -149.6106,
+          18.1135,
+          -66.7987,
+          68.6698
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "2020-09-01 00:00 Z",
+          "2023-04-11 00:00 Z"
+        ]
+      ]
+    }
+  },
+  "license": "proprietary",
+  "keywords": [
+    "Forecasting",
+    "Data",
+    "Ecology"
+  ],
+  "providers": [
+    {
+      "url": "https://data.ecoforecst.org",
+      "name": "Ecoforecast Data",
+      "roles": [
+        "producer",
+        "processor",
+        "licensor"
+      ]
+    },
+    {
+      "url": "https://ecoforecst.org",
+      "name": "Ecoforecast",
+      "roles": [
+        "host"
+      ]
+    }
+  ],
+  "description": "description placeholder",
+  "stac_version": "1.0.0",
+  "table_columns": [
+    {
+      "name": "target_id",
+      "type": "string",
+      "description": "unique identifier for target data used in the forecast"
+    },
+    {
+      "name": "datetime",
+      "type": "timestamp[us]",
+      "description": "ISO 8601(ISO 2019)datetime the forecast starts from (a.k.a. issue time); Only needed if more than one reference_datetime is stored in asingle file. Forecast lead time is thus datetime-reference_datetime. Ina hindcast the reference_datetimewill be earlierthan the time thehindcast was actually produced (seepubDatein Section3). Datetimesare allowed to be earlier than thereference_datetimeif areanalysis/reforecast is run before the start of the forecast period. Thisvariable was calledstart_timebefore v0.5 of theEFI standard."
+    },
+    {
+      "name": "parameter",
+      "type": "string",
+      "description": "ensemble member"
+    },
+    {
+      "name": "variable",
+      "type": "string",
+      "description": "aquatic forecast variables: aquatic vars"
+    },
+    {
+      "name": "prediction",
+      "type": "double",
+      "description": "predicted forecast value"
+    },
+    {
+      "name": "family",
+      "type": "string",
+      "description": "For ensembles: “ensemble.” Default value if unspecifiedFor probability distributions: Name of the statistical distributionassociated with the reported statistics. The “sample” distribution issynonymous with “ensemble.”For summary statistics: “summary.”If this dimension does not vary, it is permissible to specifyfamilyas avariable attribute if the file format being used supports this (e.g.,netCDF)."
+    },
+    {
+      "name": "site_id",
+      "type": "string",
+      "description": "For forecasts that are not on a spatial grid, use of a site dimension thatmaps to a more detailed geometry (points, polygons, etc.) is allowable.In general this would be documented in the external metadata (e.g., alook-up table that provides lon and lat); however in netCDF this couldbe handled by the CF Discrete Sampling Geometry data model."
+    },
+    {
+      "name": "model_id",
+      "type": "string",
+      "description": "unique identifier for the model used in the forecast"
+    },
+    {
+      "name": "reference_datetime",
+      "type": "string",
+      "description": "ISO 8601(ISO 2019)datetime the forecast starts from (a.k.a. issue time); Only needed if more than one reference_datetime is stored in asingle file. Forecast lead time is thus datetime-reference_datetime. Ina hindcast the reference_datetimewill be earlierthan the time thehindcast was actually produced (seepubDatein Section3). Datetimesare allowed to be earlier than thereference_datetimeif areanalysis/reforecast is run before the start of the forecast period. Thisvariable was calledstart_timebefore v0.5 of theEFI standard."
+    },
+    {
+      "name": "date",
+      "type": "string",
+      "description": "ISO 8601(ISO 2019)datetime being predicted; follows CF conventionhttp://cfconventions.org/cf-conventions/cf-conventions.html#time-coordinate. This variable was called time before v0.5of the EFIconvention.For time-integrated variables (e.g., cumulative net primary productivity), one should specify thestart_datetimeandend_datetimeas two variables, instead of the singledatetime.If this is not providedthedatetimeis assumed to be the MIDPOINT of theintegrationperiod."
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/table/v1.2.0/schema.json"
+  ],
+  "publications": {
+    "doi": "https://www.doi.org/10.22541/essoar.167079499.99891914/v1",
+    "citation": "Thomas, R.Q., C. Boettiger, C.C. Carey, M.C. Dietze, L.R. Johnson, M.A. Kenney, J.S. Mclachlan, J.A. Peters, E.R. Sokol, J.F. Weltzin, A. Willson, W.M. Woelmer, and Challenge Contributors. The NEON Ecological Forecasting Challenge. Accepted at Frontiers in Ecology and Environment. Pre-print"
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "id": "neon4cast-beetles",
+  "type": "Collection",
+  "links": [
+    {
+      "rel": "parent",
+      "type": "application/json",
+      "href": "data.ecoforecast.org/neon4cast-catalog/stac/v1/catalog.json"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "data.ecoforecast.org/neon4cast-catalog/stac/v1/catalog.json"
+    },
+    {
+      "rel": "self",
+      "type": "application/json",
+      "href": "data.ecoforecast.org/neon4cast-catalog/stac/v1/colections/beetles.json"
+    },
+    {
+      "rel": "cite-as",
+      "href": "https://doi.org/10.1002/fee.2616"
+    },
+    {
+      "rel": "about",
+      "href": "https://projects.ecoforecast.org/neon4cast-catalog/beetles-catalog.html",
+      "type": "text/html",
+      "title": "Organization Homepage"
+    },
+    {
+      "rel": "license",
+      "href": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "type": "text/html",
+      "title": "public domain"
+    },
+    {
+      "rel": "describedby",
+      "href": "https://projects.ecoforecast.org/neon4cast-catalog/beetles-catalog.html",
+      "title": "Example Notebook",
+      "type": "text/html"
+    }
+  ],
+  "title": "EFI NEON Beetles Forecasts",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -156.6194,
+          17.9696,
+          -66.7987,
+          71.2824
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "2017-01-01T00:00:00Z",
+          "2023-04-26T00:00:00Z"
+        ]
+      ]
+    }
+  },
+  "license": "CC0-1.0",
+  "keywords": ["Forecasting", "Beetles", "Carabids", "Ecology", "NEON"],
+  "providers": [
+    {
+      "url": "https://neonscience.org",
+      "name": "NEON",
+      "roles": [
+        "producer",
+        "processor",
+        "licensor"
+      ]
+    },
+    {
+      "url": "https://openstoragenetwork.org/",
+      "name": "ACCESS Open Storage Network",
+      "roles": [
+        "host"
+      ]
+    }
+  ],
+  "description": "The [Ecological Forecasting Initiative](https://ecoforecast.org)",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/table/v1.2.0/schema.json"
+  ],
+  "publications": {
+    "doi": "https://doi.org/10.1002/fee.2616",
+    "citation": "R Quinn Thomas, Carl Boettiger, Cayelan C Carey, Michael C Dietze, Leah R Johnson, Melissa A Kenney, Jason S McLachlan, Jody A Peters, Eric R Sokol, Jake F Weltzin, Alyssa Willson, Whitney M Woelmer, Challenge contributors"
+  },
+  "assets": {
+    "thumbnail": {
+      "href": "https://www.neonscience.org/sites/default/files/styles/max_width_1170px/public/image-content-images/Beetles_pinned.jpg",
+      "type": "image/JPEG",
+      "roles": [
+        "thumbnail"
+      ],
+      "title": "Beetles Forecast Challenge"
+    }
+  }
+}
+
+
+
+

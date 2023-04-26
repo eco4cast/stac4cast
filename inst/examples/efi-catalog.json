@@ -35,6 +35,24 @@
       "type": "application/json",
       "title": "Aquatics Forecast Challenge",
       "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/collections/aquatics.json"
+    },
+    {
+      "rel": "child",
+      "type": "application/json",
+      "title": "Beetles Forecast Challenge",
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/collections/beetles.json"
+    },
+    {
+      "rel": "child",
+      "type": "application/json",
+      "title": "Terrestrial Forecast Challenge",
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/collections/terrestrial.json"
+    },
+    {
+      "rel": "child",
+      "type": "application/json",
+      "title": "Phenology Forecast Challenge",
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/collections/phenology.json"
     }
   ]
 }
