@@ -1,0 +1,64 @@
+`stage1-stats` provides raw data from the [NOAA Global Ensemble Forecast](https://registry.opendata.aws/noaa-gefs/) for [25 selected surface variables](https://github.com/eco4cast/gefs4cast/blob/main/inst/extdata/gefs-selected-bands.csv) at [NEON sites](https://www.neonscience.org/field-sites), extracted for the ensemble mean and spread. Please note that forecasts of the first 10 days (240 hours) use a 3 hr interval, while forecasts of days 11 through 35 days use a 6 hr interval (for v12).
+
+## Access
+
+Use `arrow` for quick remote access to the database. Specifying the `reference_datetime={date}` is optional but will give the best performance.
+
+### R 
+
+```{r}
+date <- "2020-09-24"
+stage <- "stage1-stats"
+path <- "neon4cast-drivers/noaa/gefs-v12"
+bucket <- "bio230014-bucket01"
+endpoint <- "https://sdsc.osn.xsede.org"
+
+stage1 <- 
+  glue::glue("{bucket}/{path}/{stage}/reference_datetime={date}") |>
+  arrow::s3_bucket(endpoint_override = endpoint, anonymous = TRUE) |>
+  arrow::open_dataset()
+```
+
+Now we can use `dplyr` commands to subset the desired data without downloading the entire data product. 
+
+```{r}
+library(dplyr)
+
+q <- stage1 |> 
+  filter(variable == "TMP",
+         site_id == "BART")
+
+df <- q |> collect()
+```
+
+
+### Python
+
+```{python}
+import pyarrow.dataset as ds
+from pyarrow import fs
+
+date = "2020-09-24"
+stage = "stage1-stats"
+path = "neon4cast-drivers/noaa/gefs-v12"
+bucket = "bio230014-bucket01"
+endpoint = "https://sdsc.osn.xsede.org"
+s3 = fs.S3FileSystem(endpoint_override = endpoint, anonymous = True)
+
+dset = ds.dataset(
+    f"{bucket}/{path}/{stage}/reference_datetime={date}",
+    filesystem=s3, partitioning="hive")
+    
+```
+
+
+```{python}
+import polars as pl
+q = (
+  pl.scan_pyarrow_dataset(dset)
+  .filter(pl.col("variable") == "TMP")
+  .filter(pl.col("site_id") == "BART")
+)
+df = q.collect()
+```
+

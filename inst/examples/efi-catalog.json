@@ -1,0 +1,40 @@
+{
+  "type": "Catalog",
+  "id": "efi-stac",
+  "title": "Ecological Forecasting Initiative STAC API",
+  "description": "Searchable spatiotemporal metadata describing forecasts by the Ecological Forecasting Initiative",
+  "stac_version": "1.0.0",
+  "conformsTo": [
+    "https://api.stacspec.org/v1.0.0-rc.1/collections",
+    "https://api.stacspec.org/v1.0.0-rc.1/core"
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/catalog.json"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/catalog.json"
+    },
+    {
+      "rel": "data",
+      "type": "application/json",
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/collections/catalog.json"
+    },
+    {
+      "rel": "child",
+      "type": "application/json",
+      "title": "NOAA Global Ensemble Forecast System",
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/collections/noaa.json"
+    },
+    {
+      "rel": "child",
+      "type": "application/json",
+      "title": "Aquatics Forecast Challenge",
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/collections/aquatics.json"
+    }
+  ]
+}

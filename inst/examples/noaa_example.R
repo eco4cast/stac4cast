@@ -1,3 +1,5 @@
+devtools::load_all("../..")
+
 max_date <- Sys.Date()
 min_date <- as.Date("2017-01-01")
 site_data <-
@@ -49,19 +51,21 @@ table_columns <-
 gefs <- build_collection(
   id="neon4cast-gefs",
   title = 'Ecological Forecasting Initiative - NOAA GEFS Forecast Snapshots',
-  description = readr::read_file("inst/examples/gefs_description.md"),
+  description = readr::read_file("components/gefs_description.md"),
   keywords = c('Forecasting','Data','Weather', 'NOAA'),
   license = "CC0-1.0",
   extent = extent,
   extensions = list("https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
                     "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
                     "https://stac-extensions.github.io/table/v1.2.0/schema.json"),
-  links = build_links(root = 'https://data.ecoforecast.org/neon4cast-forecasts/',
+  links = build_links(root = 'https://data.ecoforecast.org/neon4cast-forecasts/stac/v1/catalog.json',
+                      parent = 'https://data.ecoforecast.org/neon4cast-forecasts/stac/v1/catalog.json',
+                      self = 'https://data.ecoforecast.org/neon4cast-forecasts/stac/v1/noaa.json',
                       doi = doi,
                       about = 'https://projects.ecoforecast.org/neon4cast-catalog/noaa-catalog.html',
                       example = 'https://projects.ecoforecast.org/neon4cast-catalog/noaa-catalog.html'),
   providers = build_providers(data_url = 'https://www.emc.ncep.noaa.gov/emc/pages/numerical_forecast_systems/gefs.php',
-                              data_name = 'NOAA GEFS',
+                              data_name = 'NOAA Forecasts',
                               host_url = 'https://registry.opendata.aws/noaa-gefs/',
                               host_name = 'AWS Open Data Registry'),
   publications = build_publications(doi = doi,
@@ -69,14 +73,25 @@ gefs <- build_collection(
   table_columns = table_columns,
   assets = build_assets(
     thumbnail = build_thumbnail(
-      href = 'https://data.ecoforecast.org/neon4cast-catalog/img/EFI_Logo-1.jpg',
-      title = 'EFI Logo'),
-    parquet_items = build_parquet(
+      href = 'https://data.ecoforecast.org/neon4cast-catalog/img/gefs_thumbnail.jpg',
+      title = 'GEFS temperature forecast thumbnail'),
+    parquet_items1 = build_parquet(
       href = "https://sdsc.osn.xsede.org/bio230014-bucket01/noaa/gefs-v12/stage1/",
-      title = 'Parquet STAC Items',
-      description = readr::read_file("inst/examples/stage1-parquet-description.Rmd"))
+      title = 'GEFS stage1 collection',
+      description = readr::read_file("components/gefs-stage1-description.Rmd")
+    ),
+    parquet_items2 = build_parquet(
+      href = "https://sdsc.osn.xsede.org/bio230014-bucket01/noaa/gefs-v12/stage1-stats/",
+      title = 'GEFS stage1-stats collection',
+      description = readr::read_file("components/gefs-stage1-stats-description.Rmd")
+    ),
+    parquet_items3 = build_parquet(
+      href = "https://sdsc.osn.xsede.org/bio230014-bucket01/noaa/gefs-v12/cfs/6hrly/00/",
+      title = 'CFS collection',
+      description = readr::read_file("components/cfs-description.Rmd")
+    )
   )
 )
 
-write_stac(gefs, "gefs_collection.json")
-stac_validate("gefs_collection.json")
+write_stac(gefs, "noaa.json")
+stac_validate("noaa.json")

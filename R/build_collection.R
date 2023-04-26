@@ -71,9 +71,9 @@ build_collection <- function(id,
 #'
 #' @param root The actual link in the format of an URL.
 #'  Relative and absolute links are both allowed.
-#' @param items relative to root, path to items.json
-#' @param self relative to root, path to self
-#' @param parent relative to root, path to parent of self
+#' @param items URL to any items.json
+#' @param self URL
+#' @param parent URL to parent of self
 #' @param doi optional argument to be used in the cite-as link object
 #' @param about a URL for describing the relevant organization or group for the collection
 #' @param license URL of license
@@ -82,7 +82,7 @@ build_collection <- function(id,
 #'
 build_links <- function(root,
                         items = file.path(root, "items.json"),
-                        parent = root,
+                        parent,
                         self = root,
                         doi = NULL,
                         license = "https://creativecommons.org/publicdomain/zero/1.0/",
@@ -112,10 +112,10 @@ links_list <- list(list(rel = "items", type = "application/json", href = items),
 #' @export
 #'
 build_assets <- function(thumbnail = build_thumbnail(),
-                         parquet_items = build_parquet()){ ## come back to later
+                         ...){ ## come back to later
 
   assets_list <- list(thumbnail = thumbnail,
-                     parquet_items = parquet_items)
+                      ...)
 
   return(assets_list)
 }
