@@ -5,22 +5,22 @@
     {
       "rel": "items",
       "type": "application/json",
-      "href": "https://data.ecoforecast.org/neon4cast-forecasts/stac/v1/catalog.json/items.json"
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/catalog.json/items.json"
     },
     {
       "rel": "parent",
       "type": "application/json",
-      "href": "https://data.ecoforecast.org/neon4cast-forecasts/stac/v1/catalog.json"
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/catalog.json"
     },
     {
       "rel": "root",
       "type": "application/json",
-      "href": "https://data.ecoforecast.org/neon4cast-forecasts/stac/v1/catalog.json"
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/catalog.json"
     },
     {
       "rel": "self",
       "type": "application/json",
-      "href": "https://data.ecoforecast.org/neon4cast-forecasts/stac/v1/noaa.json"
+      "href": "https://data.ecoforecast.org/neon4cast-catalog/stac/v1/noaa.json"
     },
     {
       "rel": "cite-as",
