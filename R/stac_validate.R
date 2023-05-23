@@ -4,6 +4,11 @@
 #' @param x path or url for the json file that is being validated
 #' @details requires `reticulate`
 #' @export
+#' @examplesIf reticulate::py_module_available("stac_validator")
+#' paste0("https://github.com/eco4cast/stac4cast/",
+#'        "raw/main/inst/examples/beetles.json") |>
+#'   stac4cast::stac_validate()
+
 #'
 stac_validate <- function(x){
 

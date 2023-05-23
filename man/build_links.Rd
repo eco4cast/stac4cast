@@ -7,7 +7,7 @@
 build_links(
   root,
   items = file.path(root, "items.json"),
-  parent = root,
+  parent,
   self = root,
   doi = NULL,
   license = "https://creativecommons.org/publicdomain/zero/1.0/",
@@ -19,11 +19,11 @@ build_links(
 \item{root}{The actual link in the format of an URL.
 Relative and absolute links are both allowed.}
 
-\item{items}{relative to root, path to items.json}
+\item{items}{URL to any items.json}
 
-\item{parent}{relative to root, path to parent of self}
+\item{parent}{URL to parent of self}
 
-\item{self}{relative to root, path to self}
+\item{self}{URL}
 
 \item{doi}{optional argument to be used in the cite-as link object}
 

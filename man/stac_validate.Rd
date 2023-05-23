@@ -15,3 +15,10 @@ stac validate
 \details{
 requires \code{reticulate}
 }
+\examples{
+\dontshow{if (reticulate::py_module_available("stac_validator")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+paste0("https://github.com/eco4cast/stac4cast/",
+       "raw/main/inst/examples/beetles.json") |>
+  stac4cast::stac_validate()
+\dontshow{\}) # examplesIf}
+}

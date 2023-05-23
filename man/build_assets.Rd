@@ -4,12 +4,12 @@
 \alias{build_assets}
 \title{Build the Assets object for a collection}
 \usage{
-build_assets(thumbnail = build_thumbnail(), parquet_items = build_parquet())
+build_assets(thumbnail = build_thumbnail(), ...)
 }
 \arguments{
 \item{thumbnail}{list describing the thumbnail object(s) used in the collection}
 
-\item{parquet_items}{list describing the parquet object(s) used in the collection}
+\item{...}{list describing the parquet object(s) used in the collection}
 }
 \description{
 Build the Assets object for a collection

@@ -107,12 +107,12 @@ links_list <- list(list(rel = "items", type = "application/json", href = items),
 #' Build the Assets object for a collection
 #'
 #' @param thumbnail list describing the thumbnail object(s) used in the collection
-#' @param parquet_items list describing the parquet object(s) used in the collection
+#' @param ... list describing the parquet object(s) used in the collection
 #'
 #' @export
 #'
 build_assets <- function(thumbnail = build_thumbnail(),
-                         ...){ ## come back to later
+                         ...){
 
   assets_list <- list(thumbnail = thumbnail,
                       ...)
