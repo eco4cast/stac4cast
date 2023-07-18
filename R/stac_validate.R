@@ -12,9 +12,6 @@
 #'
 stac_validate <- function(x){
 
-  reticulate::miniconda_path() |> 
-    reticulate::use_miniconda()
-
   requireNamespace("reticulate", quietly = TRUE)
   if(!reticulate::py_module_available("stac_validator")) {
     reticulate::py_install('stac-validator')
