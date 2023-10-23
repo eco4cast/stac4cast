@@ -251,6 +251,13 @@ build_table_columns <- function(data_object,description_df){
   return(init_list)
 }
 
+#' Build table_columns object for collection
+#'
+#' @param data_object parquet object used to store data
+#' @param description_df dataframe of table column descriptions, one description for each column needed
+#'
+#' @export
+#'
 build_table_columns_full_bucket <- function(data_object,description_df){
 
   full_string_list <- strsplit(data_object$ToString(),'\n')[[1]]
