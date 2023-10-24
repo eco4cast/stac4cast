@@ -6,8 +6,7 @@
 #' @export
 #'
 get_grouping <- function(inv_bucket,
-                         theme,
-                         collapse=TRUE) {
+                         theme) {
 
   groups <- duckdbfs::open_dataset(glue::glue("s3://anonymous@{inv_bucket}/catalog?endpoint_override=",config$endpoint)) |>
     dplyr::filter(...1 == "parquet", ...2 == {theme}) |>
