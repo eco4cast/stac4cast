@@ -88,17 +88,17 @@ build_links <- function(root,
                         license = "https://creativecommons.org/publicdomain/zero/1.0/",
                         about = NULL,
                         example = NULL){
-links_list <- list(list(rel = "items", type = "application/json", href = items),
-                   list(rel = "parent", type = "application/json", href = parent),
-                   list(rel = "root", type = "application/json", href = root),
-                   list(rel = "self", type = "application/json", href = self),
-                   list(rel = "cite-as", href = doi),
-                   list(rel = "about", href = about, type = 'text/html',
-                        title = 'Organization Homepage'),
-                   list(rel = "license", href = license, type = 'text/html',
-                        title = "public domain"),
-                   list(rel = "describedby", href = example,
-                        title = 'Example Notebook',type = 'text/html'))
+  links_list <- list(list(rel = "items", type = "application/json", href = items),
+                     list(rel = "parent", type = "application/json", href = parent),
+                     list(rel = "root", type = "application/json", href = root),
+                     list(rel = "self", type = "application/json", href = self),
+                     list(rel = "cite-as", href = doi),
+                     list(rel = "about", href = about, type = 'text/html',
+                          title = 'Organization Homepage'),
+                     list(rel = "license", href = license, type = 'text/html',
+                          title = "public domain"),
+                     list(rel = "describedby", href = example,
+                          title = 'Example Notebook',type = 'text/html'))
   # FIXME drop whole link element for any entries for which href is NULL
   return(links_list)
 }
@@ -149,10 +149,10 @@ build_thumbnail <- function(href,title){ #assuming thubmail is an image
 build_parquet <- function(href, title = NULL, description = NULL){ #assuming a parquet file
 
   parquet_list <- list(href = href,
-                         type = "application/x-parquet",
-                         roles = list("stac-items"),
-                         title = title,
-                         description = description)
+                       type = "application/x-parquet",
+                       roles = list("stac-items"),
+                       title = title,
+                       description = description)
   return(parquet_list)
 }
 
@@ -184,9 +184,9 @@ build_extent <- function(lat_min, lat_max, lon_min, lon_max,
   }
 
   bbox_list <- list(list(lon_min,
-                    lat_min,
-                    lon_max,
-                    lat_max))
+                         lat_min,
+                         lon_max,
+                         lat_max))
 
   extent_list <- list(spatial = list(bbox = bbox_list),
                       temporal = list(interval = temporal_list))
@@ -238,7 +238,7 @@ build_table_columns <- function(data_object,description_df){
   #create initial empty list
   init_list = vector(mode="list", length = data_object[[1]]$num_cols)
 
-## loop through parquet df and description information to build the list
+  ## loop through parquet df and description information to build the list
   for (i in seq.int(1,data_object[[1]]$num_cols)){
     list_items <- strsplit(full_string_list[i],': ')[[1]]
     col_list <- list(name = list_items[1],
@@ -265,7 +265,7 @@ build_table_columns_full_bucket <- function(data_object,description_df){
   #create initial empty list
   init_list = vector(mode="list", length = data_object[[1]]$num_cols)
 
-## loop through parquet df and description information to build the list
+  ## loop through parquet df and description information to build the list
   for (i in seq.int(1,data_object$num_cols)){
     list_items <- strsplit(full_string_list[i],': ')[[1]]
     col_list <- list(name = list_items[1],

@@ -1,4 +1,3 @@
-
 #' stac validate
 #'
 #' @param x path or url for the json file that is being validated
