@@ -4,7 +4,7 @@
 \alias{get_grouping}
 \title{Organize the groupings for themes}
 \usage{
-get_grouping(inv_bucket, theme, collapse = TRUE)
+get_grouping(inv_bucket, theme)
 }
 \arguments{
 \item{inv_bucket}{name of s3 bucket}

@@ -2,18 +2,16 @@
 % Please edit documentation in R/generate_model_items.R
 \name{generate_model_items}
 \alias{generate_model_items}
-\title{Organize the groupings for themes}
+\title{Create model items}
 \usage{
 generate_model_items(model_list)
 }
 \arguments{
-\item{inv_bucket}{name of s3 bucket}
-
-\item{theme}{theme name}
+\item{model_list}{unique model_ids}
 }
 \value{
 JSON code for model asset items
 }
 \description{
-Organize the groupings for themes
+Create model items
 }
