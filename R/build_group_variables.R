@@ -93,8 +93,8 @@ build_group_variables <- function(table_schema,
           paste0(end_date,"T00:00:00Z"))
         ))
     ),
-    #"table:columns" = stac4cast::build_table_columns_full_bucket(table_schema, table_description),
-    "table:columns" = build_table_columns_full_bucket(table_schema, table_description),
+    "table:columns" = stac4cast::build_table_columns_full_bucket(table_schema, table_description),
+    #"table:columns" = build_table_columns_full_bucket(table_schema, table_description),
     'assets' = list(
       'data' = list(
         "href" = aws_asset_link,

@@ -86,8 +86,8 @@ build_model <- function(model_id,
       ),
       "license"= "CC0-1.0",
       "keywords"= c(preset_keywords, variables_reformat),
-      #"table:columns" = stac4cast::build_table_columns_full_bucket(table_schema, table_description)
-      "table:columns" = build_table_columns_full_bucket(table_schema, table_description)
+      "table:columns" = stac4cast::build_table_columns_full_bucket(table_schema, table_description)
+      #"table:columns" = build_table_columns_full_bucket(table_schema, table_description)
     ),
     "collection"= collection_name,
     "links"= list(
