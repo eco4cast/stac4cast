@@ -7,15 +7,7 @@
 generate_group_variable_items(variables)
 }
 \arguments{
-\item{table_schema}{schema of data table, accessed through s3}
-
-\item{table_description}{table that includes descriptions of data columns}
-
-\item{start_date}{table that includes descriptions of data columns}
-
-\item{end_date}{table that includes descriptions of data columns}
-
-\item{description_string}{brief description to describe JSON}
+\item{variables}{unique variables for group}
 }
 \value{
 JSON code for group variable items

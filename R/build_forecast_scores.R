@@ -4,6 +4,7 @@
 #' @param table_description table that includes descriptions of data columns
 #' @param start_date table that includes descriptions of data columns
 #' @param end_date table that includes descriptions of data columns
+#' @param id_value title for json file
 #' @param description_string brief description to describe JSON
 #' @param about_string string that contains the "about" asset information
 #' @param about_title title to describe the "about" asset information
@@ -21,6 +22,7 @@ build_forecast_scores <- function(table_schema,
                                   table_description,
                                   start_date,
                                   end_date,
+                                  id_value,
                                   description_string,
                                   about_string,
                                   about_title,
@@ -101,8 +103,8 @@ build_forecast_scores <- function(table_schema,
           paste0(end_date,"T00:00:00Z"))
         ))
     ),
-    #"table:columns" = stac4cast::build_table_columns_full_bucket(table_schema, table_description),
-    "table:columns" = build_table_columns_full_bucket(table_schema, table_description),
+    "table:columns" = stac4cast::build_table_columns_full_bucket(table_schema, table_description),
+    #"table:columns" = build_table_columns_full_bucket(table_schema, table_description),
 
     'assets' = list(
       'data' = list(

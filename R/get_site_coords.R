@@ -8,7 +8,7 @@
 #'
 get_site_coords <- function(site_metadata, sites){
 
-  site_df <- read_csv(site_metadata)
+  site_df <- read_csv(site_metadata, col_types = cols())
 
   site_lat_lon <- lapply(sites, function(i) c(site_df$latitude[which(site_df[,2] == i)], site_df$longtitude[which(site_df[,2] == i)]))
 

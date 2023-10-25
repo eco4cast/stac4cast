@@ -9,6 +9,7 @@ build_forecast_scores(
   table_description,
   start_date,
   end_date,
+  id_value,
   description_string,
   about_string,
   about_title,
@@ -28,6 +29,8 @@ build_forecast_scores(
 \item{start_date}{table that includes descriptions of data columns}
 
 \item{end_date}{table that includes descriptions of data columns}
+
+\item{id_value}{title for json file}
 
 \item{description_string}{brief description to describe JSON}
 

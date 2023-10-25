@@ -1,7 +1,6 @@
-#' Organize the groupings for themes
+#' Create model items
 #'
-#' @param inv_bucket name of s3 bucket
-#' @param theme theme name
+#' @param model_list unique model_ids
 #'
 #' @return JSON code for model asset items
 #' @export

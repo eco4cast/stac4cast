@@ -4,6 +4,7 @@
 #' @param table_description table that includes descriptions of data columns
 #' @param start_date table that includes descriptions of data columns
 #' @param end_date table that includes descriptions of data columns
+#' @param id_value title for json file
 #' @param description_string brief description to describe JSON
 #' @param about_string string that contains the "about" asset information
 #' @param about_title title to describe the "about" asset information
@@ -19,6 +20,7 @@ build_group_variables <- function(table_schema,
                                   table_description,
                                   start_date,
                                   end_date,
+                                  id_value,
                                   description_string,
                                   about_string,
                                   about_title,
@@ -63,18 +65,18 @@ build_group_variables <- function(table_schema,
                   ),
                   list(
                     "rel" = "cite-as",
-                    "href" = "https://doi.org/10.1002/fee.2616"
+                    "href" = catalog_config$citation_doi
                   ),
                   list(
                     "rel" = "about",
-                    "href" = about_string,
+                    "href" = catalog_config$about_string,
                     "type" = "text/html",
-                    "title" = about_title
+                    "title" = catalog_config$about_title
                   ),
                   list(
                     "rel" = "describedby",
-                    "href" = "https://ltreb-reservoirs.github.io/vera4cast/",
-                    "title" = "VERA Forecast Challenge Dashboard",
+                    "href" = catalog_config$about_string,
+                    "title" = catalog_config$about_title,
                     "type" = "text/html"
                   )
                 )),
@@ -91,8 +93,8 @@ build_group_variables <- function(table_schema,
           paste0(end_date,"T00:00:00Z"))
         ))
     ),
-    #"table:columns" = stac4cast::build_table_columns_full_bucket(table_schema, table_description),
-    "table:columns" = build_table_columns_full_bucket(table_schema, table_description),
+    "table:columns" = stac4cast::build_table_columns_full_bucket(table_schema, table_description),
+    #"table:columns" = build_table_columns_full_bucket(table_schema, table_description),
     'assets' = list(
       'data' = list(
         "href" = aws_asset_link,
