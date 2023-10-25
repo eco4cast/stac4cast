@@ -27,6 +27,7 @@ build_model <- function(model_id,
                         var_values,
                         duration_names,
                         site_values,
+                        site_table,
                         model_documentation,
                         destination_path,
                         aws_download_path,
@@ -60,7 +61,7 @@ build_model <- function(model_id,
                 as.numeric(catalog_config$bbox$max_lat))),
     "geometry"= list(
       "type"= catalog_config$site_type,
-      "coordinates"=  get_site_coords(sites = site_values)
+      "coordinates"=  stac4cast::get_site_coords(site_metadata = site_table, sites = site_values)
     ),
     "properties"= list(
       #'description' = model_description,
@@ -74,7 +75,7 @@ build_model <- function(model_id,
 '),
       "start_datetime" = start_date,
       "end_datetime" = end_date,
-      "providers"= c(generate_authors(metadata_table = model_documentation),list(
+      "providers"= c(stac4cast::generate_authors(metadata_table = model_documentation),list(
         list(
           "url"= catalog_config$host_url,
           "name"= catalog_config$host_name,
@@ -115,7 +116,7 @@ build_model <- function(model_id,
         "type"= "application/json",
         "title"= "Model Forecast"
       )),
-    "assets"= generate_model_assets(var_values, duration_names, aws_download_path)#,
+    "assets"= stac4cast::generate_model_assets(var_values, duration_names, aws_download_path)#,
     #pull_images(theme_id,model_id,thumbnail_image_name)
   )
 

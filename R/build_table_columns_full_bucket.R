@@ -11,7 +11,7 @@ build_table_columns_full_bucket <- function(data_object,description_df){
   full_string_list <- strsplit(data_object$ToString(),'\n')[[1]]
 
   #create initial empty list
-  init_list = vector(mode="list", length = data_object[[1]]$num_cols)
+  init_list = vector(mode="list", length = data_object$num_cols)
 
   ## loop through parquet df and description information to build the list
   for (i in seq.int(1,data_object$num_cols)){

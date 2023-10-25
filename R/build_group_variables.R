@@ -65,18 +65,18 @@ build_group_variables <- function(table_schema,
                   ),
                   list(
                     "rel" = "cite-as",
-                    "href" = "https://doi.org/10.1002/fee.2616"
+                    "href" = catalog_config$citation_doi
                   ),
                   list(
                     "rel" = "about",
-                    "href" = about_string,
+                    "href" = catalog_config$about_string,
                     "type" = "text/html",
-                    "title" = about_title
+                    "title" = catalog_config$about_title
                   ),
                   list(
                     "rel" = "describedby",
-                    "href" = "https://ltreb-reservoirs.github.io/vera4cast/",
-                    "title" = "VERA Forecast Challenge Dashboard",
+                    "href" = catalog_config$about_string,
+                    "title" = catalog_config$about_title,
                     "type" = "text/html"
                   )
                 )),
