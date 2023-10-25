@@ -2,7 +2,7 @@
 #'
 #' @param group_values list of groups to organize the catalog (variable groups, themes, etc.)
 #'
-#' @export JSON code for child items
+#' @export
 #'
 generate_group_values <- function(group_values){
 
