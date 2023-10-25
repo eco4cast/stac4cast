@@ -13,6 +13,7 @@ build_model(
   var_values,
   duration_names,
   site_values,
+  site_table,
   model_documentation,
   destination_path,
   aws_download_path,

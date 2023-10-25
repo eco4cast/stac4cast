@@ -9,9 +9,6 @@ generate_group_values(group_values)
 \arguments{
 \item{group_values}{list of groups to organize the catalog (variable groups, themes, etc.)}
 }
-\value{
-JSON code for child items
-}
 \description{
 Generate child items for catalog group items (variable groups)
 }
