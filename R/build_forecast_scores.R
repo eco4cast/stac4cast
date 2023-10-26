@@ -18,6 +18,7 @@
 #' @return JSON code for child items
 #'
 #'@export
+#'
 build_forecast_scores <- function(table_schema,
                                   table_description,
                                   start_date,

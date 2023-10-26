@@ -9,9 +9,6 @@ generate_group_variable_items(variables)
 \arguments{
 \item{variables}{unique variables for group}
 }
-\value{
-JSON code for group variable items
-}
 \description{
 Build the group variable items
 }
