@@ -12,6 +12,8 @@
 #' @param destination_path path for saving the JSON file
 #' @param aws_download_path path for s3 data download
 #' @param group_var_items list of variables for the group, called within generate_variable_model_items()
+#' @param thumbnail_link link for the thumbnail image 
+#' @param thumbnail_title title for the thumbnail image 
 
 #'
 #' @export
