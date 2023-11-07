@@ -113,7 +113,6 @@ build_group_variables <- function(table_schema,
       )
       )
     )
-  )
 
 
   dest <- destination_path
