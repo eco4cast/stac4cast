@@ -34,7 +34,8 @@ build_model <- function(model_id,
                         collection_name,
                         thumbnail_image_name,
                         table_schema,
-                        table_description) {
+                        table_description,
+                        full_var_df) {
 
 
   preset_keywords <- list("Forecasting", config$project_id)
@@ -117,7 +118,7 @@ build_model <- function(model_id,
         "type"= "application/json",
         "title"= "Model Forecast"
       )),
-    "assets"= stac4cast::generate_model_assets(var_values, duration_names, aws_download_path)#,
+    "assets"= stac4cast::generate_model_assets(full_var_df, aws_download_path)#,
     #pull_images(theme_id,model_id,thumbnail_image_name)
   )
 
