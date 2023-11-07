@@ -12,8 +12,8 @@
 #' @param destination_path path for saving the JSON file
 #' @param aws_download_path path for s3 data download
 #' @param group_var_items list of variables for the group, called within generate_variable_model_items()
-#' @param thumbnail_link link for the thumbnail image 
-#' @param thumbnail_title title for the thumbnail image 
+#' @param thumbnail_link link for the thumbnail image
+#' @param thumbnail_title title for the thumbnail image
 
 #'
 #' @export
@@ -31,7 +31,8 @@ build_group_variables <- function(table_schema,
                                   aws_download_path,
                                   group_var_items,
                                   thumbnail_link,
-                                  thumbnail_title
+                                  thumbnail_title,
+                                  group_var_vector
 ){
 
   aws_asset_link <-  paste0("s3://anonymous@",
@@ -39,7 +40,7 @@ build_group_variables <- function(table_schema,
                             #"/model_id=", model_id,
                             "?endpoint_override=",config$endpoint)
 
-  aws_asset_description <-   aws_asset_description <- paste0("Use `arrow` for remote access to the database. This R code will return results for the NEON Ecological Forecasting Aquatics theme.\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",aws_asset_link,")\ndf <- all_results |> dplyr::collect()\n\n```
+  aws_asset_description <-   aws_asset_description <- paste0("Use `arrow` for remote access to the database. This R code will return results for the NEON Ecological Forecasting Aquatics theme.\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",aws_asset_link,")\ndf <- all_results |>\n dplyr::filter(variable %in% c(", group_var_vector,")) |>\n dplyr::collect()\n\n```
        \n\nYou can use dplyr operations before calling `dplyr::collect()` to `summarise`, `select` columns, and/or `filter` rows prior to pulling the data into a local `data.frame`. Reducing the data that is pulled locally will speed up the data download speed and reduce your memory usage.\n\n\n")
   forecast_score <- list(
     "id" = id_value,
