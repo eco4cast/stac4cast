@@ -39,7 +39,7 @@ build_model <- function(model_id,
 
 
   preset_keywords <- list("Forecasting", config$project_id)
-  #variables_reformat <- paste(var_values, collapse = ", ")
+  variables_string <- paste(var_values, collapse = ", ")
   variables_reformat <- as.list(var_values)
   site_reformat <- paste(site_values, collapse = ", ")
 
@@ -73,7 +73,7 @@ build_model <- function(model_id,
 
     Sites: {site_reformat}
 
-    Variables: {variables_reformat}
+    Variables: {variables_string}
 '),
       "start_datetime" = start_date,
       "end_datetime" = end_date,
