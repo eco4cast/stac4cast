@@ -14,6 +14,7 @@
 #' @param group_var_items list of variables for the group, called within generate_variable_model_items()
 #' @param thumbnail_link link for the thumbnail image
 #' @param thumbnail_title title for the thumbnail image
+#' @param group_var_vector vector of variables that belong in a group
 
 #'
 #' @export
