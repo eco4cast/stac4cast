@@ -38,7 +38,8 @@ build_model <- function(model_id,
 
 
   preset_keywords <- list("Forecasting", config$project_id)
-  variables_reformat <- paste(var_values, collapse = ", ")
+  #variables_reformat <- paste(var_values, collapse = ", ")
+  variables_reformat <- as.list(var_values)
   site_reformat <- paste(site_values, collapse = ", ")
 
   aws_asset_link <- paste0("s3://anonymous@",
