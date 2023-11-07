@@ -27,7 +27,9 @@ build_group_variables <- function(table_schema,
                                   theme_title,
                                   destination_path,
                                   aws_download_path,
-                                  group_var_items
+                                  group_var_items,
+                                  thumbnail_link,
+                                  thumbnail_title
 ){
 
   aws_asset_link <-  paste0("s3://anonymous@",
@@ -102,6 +104,13 @@ build_group_variables <- function(table_schema,
         "title"= 'Database Access',
         "roles" = list('data'),
         "description"= aws_asset_description
+      ),
+      'thumbnail' = list(
+        "href"= thumbnail_link,
+        "type"= "image/JPEG",
+        "roles" = list('thumbnail'),
+        "title"= thumbnail_title
+      )
       )
     )
   )
