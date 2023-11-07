@@ -23,7 +23,7 @@ generate_model_assets <- function(m_vars, m_duration, aws_path){
   model_data_assets <- purrr::map(iterator_list, function(i)
     list(
       'type'= 'application/x-parquet',
-      'title' = paste0('Database Access for ',m_vars[i],' ', m_duration[i]),
+      'title' = paste0('Database Access for',' ',m_vars[i]),
       'href' = paste0("s3://anonymous@",
                       aws_path,
                       "/parquet/duration=P1D/variable=", m_vars[i],
