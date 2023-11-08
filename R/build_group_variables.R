@@ -15,7 +15,7 @@
 #' @param thumbnail_link link for the thumbnail image
 #' @param thumbnail_title title for the thumbnail image
 #' @param group_var_vector vector of variables that belong in a group
-
+#' @param group_sites unique sites included in the group
 #'
 #' @export
 #'
@@ -33,7 +33,8 @@ build_group_variables <- function(table_schema,
                                   group_var_items,
                                   thumbnail_link,
                                   thumbnail_title,
-                                  group_var_vector
+                                  group_var_vector,
+                                  group_sites
 ){
 
   aws_asset_link <-  paste0("s3://anonymous@",
@@ -98,10 +99,7 @@ build_group_variables <- function(table_schema,
     "title" = theme_title,
     "extent" = list(
       "spatial" = list(
-        'bbox' = list(list(as.numeric(catalog_config$bbox$min_lon),
-                           as.numeric(catalog_config$bbox$min_lat),
-                           as.numeric(catalog_config$bbox$max_lon),
-                           as.numeric(catalog_config$bbox$max_lat)))),
+        'bbox' = list(list(stac4cast::get_bbox(site_metadata = catalog_config$site_metadata_url, sites = group_sites)))),
       "temporal" = list(
         'interval' = list(list(
           paste0(start_date,"T00:00:00Z"),
