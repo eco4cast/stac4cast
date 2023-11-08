@@ -4,12 +4,10 @@
 \alias{generate_model_assets}
 \title{Build the Assets objects for model JSONS}
 \usage{
-generate_model_assets(m_vars, m_duration, aws_path)
+generate_model_assets(full_var_df, aws_path)
 }
 \arguments{
-\item{m_vars}{list of unique model variables}
-
-\item{m_duration}{list of unique model duration periods}
+\item{full_var_df}{dataframe that contains variable column information (name, full name, duration, duration name)}
 
 \item{aws_path}{s3 path for accessing model data}
 }
