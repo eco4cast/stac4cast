@@ -20,7 +20,8 @@ build_model(
   collection_name,
   thumbnail_image_name,
   table_schema,
-  table_description
+  table_description,
+  full_var_df
 )
 }
 \arguments{

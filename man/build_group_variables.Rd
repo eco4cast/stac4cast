@@ -16,7 +16,11 @@ build_group_variables(
   theme_title,
   destination_path,
   aws_download_path,
-  group_var_items
+  group_var_items,
+  thumbnail_link,
+  thumbnail_title,
+  group_var_vector,
+  group_sites
 )
 }
 \arguments{
@@ -43,6 +47,14 @@ build_group_variables(
 \item{aws_download_path}{path for s3 data download}
 
 \item{group_var_items}{list of variables for the group, called within generate_variable_model_items()}
+
+\item{thumbnail_link}{link for the thumbnail image}
+
+\item{thumbnail_title}{title for the thumbnail image}
+
+\item{group_var_vector}{vector of variables that belong in a group}
+
+\item{group_sites}{unique sites included in the group}
 }
 \description{
 Build the Model JSONS for catalog
