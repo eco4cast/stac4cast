@@ -93,8 +93,8 @@ build_group_variables <- function(table_schema,
                   ),
                   list(
                     "rel" = "describedby",
-                    "href" = about_string,
-                    "title" = about_title,
+                    "href" = dashboard_string,
+                    "title" = dashboard_title,
                     "type" = "text/html"
                   )
                 )),
