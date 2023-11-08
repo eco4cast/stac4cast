@@ -27,6 +27,8 @@ build_group_variables <- function(table_schema,
                                   description_string,
                                   about_string,
                                   about_title,
+                                  dashboard_string,
+                                  dashboard_title,
                                   theme_title,
                                   destination_path,
                                   aws_download_path,
@@ -85,14 +87,14 @@ build_group_variables <- function(table_schema,
                   ),
                   list(
                     "rel" = "about",
-                    "href" = catalog_config$about_string,
+                    "href" = about_string,
                     "type" = "text/html",
-                    "title" = catalog_config$about_title
+                    "title" = about_title
                   ),
                   list(
                     "rel" = "describedby",
-                    "href" = catalog_config$about_string,
-                    "title" = catalog_config$about_title,
+                    "href" = about_string,
+                    "title" = about_title,
                     "type" = "text/html"
                   )
                 )),
