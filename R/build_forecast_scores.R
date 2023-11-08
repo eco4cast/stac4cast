@@ -95,7 +95,7 @@ build_forecast_scores <- function(table_schema,
     "extent" = list(
       "spatial" = list(
         'bbox' = list(list(as.numeric(catalog_config$bbox$min_lon),
-                           as.numeric(catalog_config$bbox$max_lat),
+                           as.numeric(catalog_config$bbox$min_lat),
                            as.numeric(catalog_config$bbox$max_lon),
                            as.numeric(catalog_config$bbox$max_lat)))),
       "temporal" = list(
