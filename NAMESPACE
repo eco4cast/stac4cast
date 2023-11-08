@@ -2,6 +2,7 @@
 
 export(build_forecast_scores)
 export(build_group_variables)
+export(build_model)
 export(build_table_columns_full_bucket)
 export(generate_authors)
 export(generate_group_values)
