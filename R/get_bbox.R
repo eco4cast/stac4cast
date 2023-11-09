@@ -12,16 +12,16 @@ get_bbox <-function(site_metadata, sites){
 
   if (!is.null(sites)){
 
-    site_lat <- sapply(sites,function(i) site_df$field_latitude[which(site_df[,2] == i)])
-    site_lon <- sapply(sites,function(i) site_df$field_longitude[which(site_df[,2] == i)])
+    site_lat <- sapply(sites,function(i) site_df$latitude[which(site_df[,2] == i)])
+    site_lon <- sapply(sites,function(i) site_df$longitude[which(site_df[,2] == i)])
 
     bbox_coords <- c(min(site_lon), min(site_lat), max(site_lon), max(site_lat))
 
   } else if (is.null(sites)){
-    bbox_coords <- c(min(site_df$field_longitude),
-                       min(site_df$field_latitude),
-                       max(site_df$field_longitude),
-                       max(site_df$field_latitude))
+    bbox_coords <- c(min(site_df$longitude),
+                       min(site_df$latitude),
+                       max(site_df$longitude),
+                       max(site_df$latitude))
   }
 
   return(bbox_coords)
