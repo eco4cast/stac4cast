@@ -35,7 +35,8 @@ build_model <- function(model_id,
                         thumbnail_image_name,
                         table_schema,
                         table_description,
-                        full_var_df) {
+                        full_var_df,
+                        code_web_link) {
 
 
   preset_keywords <- list("Forecasting", config$project_id)
@@ -117,7 +118,13 @@ build_model <- function(model_id,
         "href" = paste0(model_id,'.json'),
         "type"= "application/json",
         "title"= "Model Forecast"
-      )),
+      ),
+      list(
+        "rel"= "item",
+        "href" = code_web_link,
+        "type"= "text/html",
+        "title"= "Link for Model Code"
+        )),
     "assets"= stac4cast::generate_model_assets(full_var_df, aws_download_path)#,
     #pull_images(theme_id,model_id,thumbnail_image_name)
   )
