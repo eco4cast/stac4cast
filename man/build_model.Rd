@@ -21,7 +21,8 @@ build_model(
   thumbnail_image_name,
   table_schema,
   table_description,
-  full_var_df
+  full_var_df,
+  code_web_link
 )
 }
 \arguments{
