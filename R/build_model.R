@@ -125,7 +125,7 @@ build_model <- function(model_id,
         "type"= "text/html",
         "title"= "Link for Model Code"
         )),
-    "assets"= stac4cast::generate_model_assets(full_var_df, aws_download_path)#,
+    "assets"= stac4cast::generate_model_assets(full_var_df, aws_download_path, code_web_link)#,
     #pull_images(theme_id,model_id,thumbnail_image_name)
   )
 

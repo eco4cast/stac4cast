@@ -5,7 +5,7 @@
 #' @export
 #'
 #'
-generate_model_assets <- function(full_var_df, aws_path){
+generate_model_assets <- function(full_var_df, aws_path, model_code_link){
 
   metadata_json_asset <- list(
     "1"= list(
@@ -14,6 +14,12 @@ generate_model_assets <- function(full_var_df, aws_path){
       'href' = paste0("https://", config$endpoint,"/", config$model_metadata_bucket,"/",m,".json"),
       'description' = paste0("Use `jsonlite::fromJSON()` to download the model metadata JSON file. This R code will return metadata provided during the model registration.
       \n\n### R\n\n```{r}\n# Use code below\n\nmodel_metadata <- jsonlite::fromJSON(",paste0('"','https://', config$endpoint,'/', config$model_metadata_bucket,'/',m,'.json"'),")\n\n")
+    ),
+    "2" = list(
+      'type'= 'text/html',
+      'title' = 'Link for Model Code',
+      'href' = model_code_link,
+      'description' = paste0("Here is the link to the model code provided during the model submission team: ",model_code_link)
     )
   )
 
