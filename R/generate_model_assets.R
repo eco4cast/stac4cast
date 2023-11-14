@@ -19,7 +19,7 @@ generate_model_assets <- function(full_var_df, aws_path, model_code_link){
       'type'= 'text/html',
       'title' = 'Link for Model Code',
       'href' = model_code_link,
-      'description' = paste0("Here is the link to the model code provided during the model submission team: ",model_code_link)
+      'description' = "The link to the model code provided by the model submission team"
     )
   )
 
