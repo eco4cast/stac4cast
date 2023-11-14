@@ -40,13 +40,13 @@ build_inventory <- function(table_schema,
 
   forecast_asset_link <- paste0("s3://anonymous@",
                            aws_download_path,
-                           "catalog/forecasts",
+                           "/catalog/forecasts",
                            "/project_id=", project_identifier,
                            "?endpoint_override=",config$endpoint)
 
   scores_asset_link <- paste0("s3://anonymous@",
                                 aws_download_path,
-                                "catalog/scores",
+                                "/catalog/scores",
                                 "/project_id=", project_identifier,
                                 "?endpoint_override=",config$endpoint)
 
