@@ -4,7 +4,7 @@
 \alias{generate_model_assets}
 \title{Build the Assets objects for model JSONS}
 \usage{
-generate_model_assets(full_var_df, aws_path)
+generate_model_assets(full_var_df, aws_path, model_code_link)
 }
 \arguments{
 \item{full_var_df}{dataframe that contains variable column information (name, full name, duration, duration name)}
