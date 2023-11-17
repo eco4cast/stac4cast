@@ -66,12 +66,12 @@ build_noaa_forecast <- function(table_schema,
                   list(
                     "rel" = "parent",
                     "type"= "application/json",
-                    "href" = '../catalog.json'
+                    "href" = '../collection.json'
                   ),
                   list(
                     "rel" = "root",
                     "type" = "application/json",
-                    "href" = '../catalog.json'
+                    "href" = '../../catalog.json'
                   ),
                   list(
                     "rel" = "self",
