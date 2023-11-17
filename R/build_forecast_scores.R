@@ -83,6 +83,11 @@ build_forecast_scores <- function(table_schema,
       ))
 
   }else{
+    ## MOVE THIS INTO IT'S OWN IF STATEMENT LATER (CONDITION IS ONLY TRUE WHEN RUNNING NOAA BUILD -- FOR NOW)
+    aws_asset_link <- paste0("s3://anonymous@",
+                             aws_download_path,
+                             #"/model_id=", model_id,
+                             "?endpoint_override=",config$noaa_endpoint)
 
     link_list = list(
       list(
