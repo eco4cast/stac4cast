@@ -19,7 +19,7 @@
 #'
 #' @return JSON code for child items
 #'
-#'@export
+#' @export
 #'
 build_inventory <- function(table_schema,
                             table_description,
