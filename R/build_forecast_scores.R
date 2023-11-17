@@ -32,7 +32,8 @@ build_forecast_scores <- function(table_schema,
                                   aws_download_path,
                                   link_items,
                                   thumbnail_link,
-                                  thumbnail_title
+                                  thumbnail_title,
+                                  model_child
 ){
 
   aws_asset_link <- paste0("s3://anonymous@",
@@ -40,7 +41,18 @@ build_forecast_scores <- function(table_schema,
                            #"/model_id=", model_id,
                            "?endpoint_override=",config$endpoint)
 
-  aws_asset_description <-   aws_asset_description <- paste0("Use `arrow` for remote access to the database. This R code will return results for the VERA Forecasting Challenge.\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",aws_asset_link,")\ndf <- all_results |> dplyr::collect()\n\n```
+  if(model_child == TRUE){
+    model_item = list(
+      "rel" = "child",
+      "type" = "application/json",
+      "href" = "models/collection.json",
+      "title" = "group item"
+    )
+  } else {
+    model_item = NULL
+  }
+
+  aws_asset_description <- paste0("Use `arrow` for remote access to the database. This R code will return results for the VERA Forecasting Challenge.\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",aws_asset_link,")\ndf <- all_results |> dplyr::collect()\n\n```
        \n\nYou can use dplyr operations before calling `dplyr::collect()` to `summarise`, `select` columns, and/or `filter` rows prior to pulling the data into a local `data.frame`. Reducing the data that is pulled locally will speed up the data download speed and reduce your memory usage.\n\n\n")
   forecast_score <- list(
     "id" = id_value,
@@ -53,12 +65,7 @@ build_forecast_scores <- function(table_schema,
     'type' = 'Collection',
     'links' = c(link_items, #generate_model_items()
                 list(
-                  list(
-                    "rel" = "child",
-                    "type" = "application/json",
-                    "href" = "models/collection.json",
-                    "title" = "group item"
-                  ),
+                  model_item,
                   list(
                     "rel" = "parent",
                     "type"= "application/json",
