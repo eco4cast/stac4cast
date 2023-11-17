@@ -21,7 +21,7 @@
 #'
 #' @export
 #'
-build_inventory <- function(table_schema,
+build_noaa_forecast <- function(table_schema,
                             table_description,
                             start_date,
                             end_date,
