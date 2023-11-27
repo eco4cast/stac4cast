@@ -18,7 +18,8 @@ build_forecast_scores(
   aws_download_path,
   link_items,
   thumbnail_link,
-  thumbnail_title
+  thumbnail_title,
+  model_child
 )
 }
 \arguments{

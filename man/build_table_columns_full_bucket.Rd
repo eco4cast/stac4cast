@@ -4,7 +4,11 @@
 \alias{build_table_columns_full_bucket}
 \title{Build table_columns object for collection using whole s3 bucket}
 \usage{
-build_table_columns_full_bucket(data_object, description_df)
+build_table_columns_full_bucket(
+  data_object,
+  description_df,
+  s3_schema_build = TRUE
+)
 }
 \arguments{
 \item{data_object}{parquet object used to store data}
