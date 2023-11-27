@@ -6,8 +6,9 @@
 #' @return JSON code for the table columns asset
 #' @export
 #
-build_table_columns_full_bucket <- function(data_object,description_df){
+build_table_columns_full_bucket <- function(data_object,description_df, s3_schema_build = TRUE){
 
+if (s3_schema_build == TRUE){
   full_string_list <- strsplit(data_object$ToString(),'\n')[[1]]
 
   #create initial empty list
@@ -24,4 +25,15 @@ build_table_columns_full_bucket <- function(data_object,description_df){
 
   }
   return(init_list)
+
+} else if (s3_schema_build == FALSE){
+
+  col_list <- purrr::map(1:ncol(data_object), function(i)
+    list(
+      name = names(data_object)[i],
+      type = sapply(data_object,class)[[i]],
+      description = description_df[1,names(data_object)[i]])
+  )
+
+  }
 }

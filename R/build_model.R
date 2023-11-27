@@ -18,7 +18,6 @@
 #'
 #' @export
 #'
-#'
 build_model <- function(model_id,
                         team_name,
                         model_description,
