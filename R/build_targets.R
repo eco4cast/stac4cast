@@ -37,17 +37,14 @@ build_targets <- function(table_schema,
   inflow_targets_link <- config$inflow_targets_file
   met_targets_link <- config$met_targets_file
 
-  insitu_targets_asset_description <- paste0("Use `arrow` for remote access to the insitu targets file.
-  This R code will return results for the relevant targets file.\n\n### R\n\n```{r}\n# Use code below\n\n url <- ",insitu_targets_link,
-                                      "/ntargets <- readr::read_csv(url, show_col_types = FALSE)\n```")
+  insitu_targets_asset_description <- paste0("This R code will return results for the relevant targets file.\n\n### R\n\n```{r}\n# Use code below\n\n url <- ",insitu_targets_link,
+                                      "\ntargets <- readr::read_csv(url, show_col_types = FALSE)\n```")
 
-  inflow_targets_asset_description <- paste0("Use `arrow` for remote access to the insitu targets file.
-  This R code will return results for the relevant targets file.\n\n### R\n\n```{r}\n# Use code below\n\n url <- ",inflow_targets_link,
-                                             "/ntargets <- readr::read_csv(url, show_col_types = FALSE)\n```")
+  inflow_targets_asset_description <- paste0("This R code will return results for the relevant targets file.\n\n### R\n\n```{r}\n# Use code below\n\n url <- ",inflow_targets_link,
+                                             "\ntargets <- readr::read_csv(url, show_col_types = FALSE)\n```")
 
-  met_targets_asset_description <- paste0("Use `arrow` for remote access to the insitu targets file.
-  This R code will return results for the relevant targets file.\n\n### R\n\n```{r}\n# Use code below\n\n url <- ",met_targets_link,
-                                             "/ntargets <- readr::read_csv(url, show_col_types = FALSE)\n```")
+  met_targets_asset_description <- paste0("This R code will return results for the relevant targets file.\n\n### R\n\n```{r}\n# Use code below\n\n url <- ",met_targets_link,
+                                             "\ntargets <- readr::read_csv(url, show_col_types = FALSE)\n```")
 
   forecast_score <- list(
     "id" = id_value,
