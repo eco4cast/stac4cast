@@ -2,8 +2,6 @@
 #'
 #' @param table_schema schema of data table, accessed through s3
 #' @param table_description table that includes descriptions of data columns
-#' @param start_date table that includes descriptions of data columns
-#' @param end_date table that includes descriptions of data columns
 #' @param id_value title for json file
 #' @param description_string brief description to describe JSON
 #' @param about_string string that contains the "about" asset information
@@ -20,8 +18,8 @@
 #'
 build_sites <- function(table_schema,
                           table_description,
-                          start_date,
-                          end_date,
+                          #start_date,
+                          #end_date,
                           id_value,
                           description_string,
                           about_string,
