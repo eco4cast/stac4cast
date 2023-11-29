@@ -44,7 +44,6 @@ build_sites <- function(table_schema,
   site_asset_description <- paste0("This R code will return results for the site metadata.\n\n### R\n\n```{r}\n# Use code below\n\nurl <- ",config$site_table_link,
                                           "\nsites <- readr::read_csv(url, show_col_types = FALSE)\n```")
 
-
   forecast_score <- list(
     "id" = id_value,
     "description" = description_string,
@@ -96,11 +95,9 @@ build_sites <- function(table_schema,
                            as.numeric(catalog_config$bbox$max_lon),
                            as.numeric(catalog_config$bbox$max_lat)))),
       "temporal" = list(
-        'interval' = list(#list(
-          #paste0(start_date,"T00:00:00Z"),
-          #paste0(end_date,"T00:00:00Z"))
-          list('pending',
-               'pending')
+        'interval' = list(list(
+          paste0('pending',"T00:00:00Z"),
+          paste0('pending',"T00:00:00Z"))
         ))
     ),
     "table:columns" = stac4cast::build_table_columns_full_bucket(table_schema, table_description, s3_schema_build = FALSE),
