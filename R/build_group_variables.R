@@ -39,10 +39,10 @@ build_group_variables <- function(table_schema,
                                   group_sites
 ){
 
-  aws_asset_link <-  paste0("s3://anonymous@",
+  aws_asset_link <-  paste0('"',"s3://anonymous@",
                             aws_download_path,
                             #"/model_id=", model_id,
-                            "?endpoint_override=",config$endpoint)
+                            "?endpoint_override=",config$endpoint,'"')
 
   if (is.null(group_var_vector)){
     aws_asset_description <- paste0("Use `arrow` for remote access to the database. This R code will return results for forecasts of the variable by the specific model .\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",aws_asset_link,")\ndf <- all_results |> dplyr::collect()\n\n```

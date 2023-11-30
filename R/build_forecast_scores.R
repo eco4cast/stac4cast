@@ -36,10 +36,10 @@ build_forecast_scores <- function(table_schema,
                                   model_child
 ){
 
-  aws_asset_link <- paste0("s3://anonymous@",
+  aws_asset_link <- paste0('"',"s3://anonymous@",
                            aws_download_path,
                            #"/model_id=", model_id,
-                           "?endpoint_override=",config$endpoint)
+                           "?endpoint_override=",config$endpoint,'"')
 
   if (model_child == TRUE){
 
