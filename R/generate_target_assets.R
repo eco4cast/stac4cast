@@ -26,8 +26,8 @@ generate_target_assets <- function(target_groups, thumbnail_link, thumbnail_titl
         "type" = "application/x-parquet",
         "title"= paste(names(target_groups)[i],'Target Access'),
         "roles" = list('data'),
-        "description"= paste0("This R code will return results for the relevant targets file.\n\n### R\n\n```{r}\n# Use code below\n\nurl <- ",target_groups[[i]]$targets_file,
-                              "\ntargets <- readr::read_csv(url, show_col_types = FALSE)\n```")
+        "description"= paste0('This R code will return results for the relevant targets file.\n\n### R\n\n```{r}\n# Use code below\n\nurl <- "',target_groups[[i]]$targets_file,
+                              '"\ntargets <- readr::read_csv(url, show_col_types = FALSE)\n```')
       )
     #)
   )
