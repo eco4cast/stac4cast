@@ -37,11 +37,11 @@ generate_model_assets <- function(full_var_df, aws_path, model_code_link){
                       "/variable=", full_var_df$variable[i],
                       "/model_id=", m,
                       "?endpoint_override=",config$endpoint,'"'),
-      'description' = paste0("Use `arrow` for remote access to the database. This R code will return results for this variable and model combination.\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",paste0("s3://anonymous@",
+      'description' = paste0("Use `arrow` for remote access to the database. This R code will return results for this variable and model combination.\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",paste0('"',"s3://anonymous@",
                                                                                                                                                                                                                                           aws_path,
                                                                                                                                                                                                                                           "/parquet/duration=", full_var_df$duration[i],"/variable=", full_var_df$variable[i],
                                                                                                                                                                                                                                           "/model_id=", m,
-                                                                                                                                                                                                                                          "?endpoint_override=",config$endpoint),")\ndf <- all_results |> dplyr::collect()\n\n```
+                                                                                                                                                                                                                                          "?endpoint_override=",config$endpoint,'"'),")\ndf <- all_results |> dplyr::collect()\n\n```
        \n\nYou can use dplyr operations before calling `dplyr::collect()` to `summarise`, `select` columns, and/or `filter` rows prior to pulling the data into a local `data.frame`. Reducing the data that is pulled locally will speed up the data download speed and reduce your memory usage.\n\n\n")
     )
   )
