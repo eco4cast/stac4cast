@@ -43,13 +43,13 @@ build_noaa_forecast <- function(table_schema,
   forecast_asset_link <- paste0('"',"s3://anonymous@",
                                 aws_download_path,
                                  path_item,
-                                "/parquet/0",
+                                "/parquet",
                                 "?endpoint_override=",config$noaa_endpoint,'"')
 
   forecast_href_link <- paste0("s3://anonymous@",
                                 aws_download_path,
                                 path_item,
-                                "/parquet/0",
+                                "/parquet",
                                 "?endpoint_override=",config$noaa_endpoint)
 
   forecast_asset_description <- paste0("Use `arrow` for remote access to the database. This R code will return results for NEON forecasts associated with the forecasting challenge.\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",forecast_asset_link,")\ndf <- all_results |> dplyr::collect()\n\n```
