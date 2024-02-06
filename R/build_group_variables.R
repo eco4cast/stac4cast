@@ -44,6 +44,11 @@ build_group_variables <- function(table_schema,
                             #"/model_id=", model_id,
                             "?endpoint_override=",config$endpoint,'"')
 
+  aws_href_link <- paste0("s3://anonymous@",
+                          aws_download_path,
+                          #"/model_id=", model_id,
+                          "?endpoint_override=",config$endpoint)
+
   if (is.null(group_var_vector)){
     aws_asset_description <- paste0("Use `arrow` for remote access to the database. This R code will return results for forecasts of the variable by the specific model .\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",aws_asset_link,")\ndf <- all_results |> dplyr::collect()\n\n```
        \n\nYou can use dplyr operations before calling `dplyr::collect()` to `summarise`, `select` columns, and/or `filter` rows prior to pulling the data into a local `data.frame`. Reducing the data that is pulled locally will speed up the data download speed and reduce your memory usage.\n\n\n")
@@ -111,7 +116,7 @@ build_group_variables <- function(table_schema,
     #"table:columns" = build_table_columns_full_bucket(table_schema, table_description),
     'assets' = list(
       'data' = list(
-        "href" = aws_asset_link,
+        "href" = aws_href_link,
         "type"= "application/x-parquet",
         "title"= 'Database Access',
         "roles" = list('data'),
