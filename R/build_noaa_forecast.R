@@ -46,6 +46,12 @@ build_noaa_forecast <- function(table_schema,
                                 "/parquet/0",
                                 "?endpoint_override=",config$noaa_endpoint,'"')
 
+  forecast_href_link <- paste0("s3://anonymous@",
+                                aws_download_path,
+                                path_item,
+                                "/parquet/0",
+                                "?endpoint_override=",config$noaa_endpoint)
+
   forecast_asset_description <- paste0("Use `arrow` for remote access to the database. This R code will return results for NEON forecasts associated with the forecasting challenge.\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",forecast_asset_link,")\ndf <- all_results |> dplyr::collect()\n\n```
        \n\nYou can use dplyr operations before calling `dplyr::collect()` to `summarise`, `select` columns, and/or `filter` rows prior to pulling the data into a local `data.frame`. Reducing the data that is pulled locally will speed up the data download speed and reduce your memory usage.\n\n\n")
 
@@ -110,7 +116,7 @@ build_noaa_forecast <- function(table_schema,
 
     'assets' = list(
       'data' = list(
-        "href" = forecast_asset_link,
+        "href" = forecast_href_link,
         "type"= "application/x-parquet",
         "title"= 'Database Access',
         "roles" = list('data'),

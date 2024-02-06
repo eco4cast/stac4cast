@@ -41,6 +41,11 @@ build_forecast_scores <- function(table_schema,
                            #"/model_id=", model_id,
                            "?endpoint_override=",config$endpoint,'"')
 
+  aws_href_link <- paste0("s3://anonymous@",
+                           aws_download_path,
+                           #"/model_id=", model_id,
+                           "?endpoint_override=",config$endpoint)
+
   if (model_child == TRUE){
 
     link_list = list(
@@ -84,10 +89,10 @@ build_forecast_scores <- function(table_schema,
 
   }else{
     ## MOVE THIS INTO IT'S OWN IF STATEMENT LATER (CONDITION IS ONLY TRUE WHEN RUNNING NOAA BUILD -- FOR NOW)
-    aws_asset_link <- paste0('"',"s3://anonymous@",
-                             aws_download_path,
-                             #"/model_id=", model_id,
-                             "?endpoint_override=",config$noaa_endpoint,'"')
+    # aws_asset_link <- paste0('"',"s3://anonymous@",
+    #                          aws_download_path,
+    #                          #"/model_id=", model_id,
+    #                          "?endpoint_override=",config$noaa_endpoint,'"')
 
     link_list = list(
       list(
@@ -153,7 +158,7 @@ build_forecast_scores <- function(table_schema,
 
     'assets' = list(
       'data' = list(
-        "href" = aws_asset_link,
+        "href" = aws_href_link,
         "type"= "application/x-parquet",
         "title"= 'Database Access',
         "roles" = list('data'),
