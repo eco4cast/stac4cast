@@ -31,7 +31,7 @@ generate_model_assets <- function(full_var_df, aws_path, model_code_link){
       'title' = paste0('Database Access for',' ', full_var_df$var_duration_name[i]),
       'href' = paste0("s3://anonymous@",
                       aws_path,
-                      "/project_id=", full_var_df$project_id[i],
+                      "project_id=", full_var_df$project_id[i],
                       "/duration=", full_var_df$duration[i],
                       "/variable=", full_var_df$variable[i],
                       "/model_id=", m,
