@@ -20,9 +20,16 @@ get_bbox <-function(site_metadata, sites){
     #   filter(field_site_id %in% (sites)) |>
     #   select(longitude)
 
-    site_lat <- site_df[which(site_df[,2] == sites), 'latitude']
-    site_lon <- site_df[which(site_df[,2] == sites), 'longitude']
+    site_lat <- site_df |>
+      filter(field_site_id %in% sites) |>
+      select(latitude)
 
+    site_lon <- site_df |>
+      filter(field_site_id %in% sites) |>
+      select(longitude)
+
+    #site_lat <- site_df[which(site_df[,2] == sites), 'latitude']
+    #site_lon <- site_df[which(site_df[,2] == sites), 'longitude']
 
     #site_lat <- sapply(sites,function(i) site_df$latitude[which(site_df[,2] == i)])
     #site_lon <- sapply(sites,function(i) site_df$longitude[which(site_df[,2] == i)])
