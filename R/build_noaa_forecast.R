@@ -42,12 +42,14 @@ build_noaa_forecast <- function(table_schema,
 
   forecast_asset_link <- paste0('"',"s3://anonymous@",
                                 aws_download_path,
+                                "/",
                                  path_item,
                                 "/parquet",
                                 "?endpoint_override=",config$noaa_endpoint,'"')
 
   forecast_href_link <- paste0("s3://anonymous@",
                                 aws_download_path,
+                               "/",
                                 path_item,
                                 "/parquet",
                                 "?endpoint_override=",config$noaa_endpoint)
@@ -90,9 +92,9 @@ build_noaa_forecast <- function(table_schema,
                   ),
                   list(
                     "rel" = "about",
-                    "href" = about_string,
-                    "type" = "text/html",
-                    "title" = about_title
+                    "href" = catalog_config$about_string,
+                    "title" = catalog_config$about_title,
+                    "type" = "text/html"
                   ),
                   list(
                     "rel" = "describedby",
