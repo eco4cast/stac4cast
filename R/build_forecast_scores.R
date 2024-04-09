@@ -72,7 +72,7 @@ build_forecast_scores <- function(table_schema,
     ),
       list(
         "rel" = "cite-as",
-        "href" = catalog_config$citation_doi
+        "href" = catalog_config$citation_doi_link
       ),
       list(
         "rel" = "about",
@@ -138,7 +138,7 @@ build_forecast_scores <- function(table_schema,
     "stac_extensions"= list("https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
                             "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
                             "https://stac-extensions.github.io/table/v1.2.0/schema.json"),
-    "sci:doi": catalog_config$citation_doi,
+    #"sci:doi": catalog_config$citation_doi,
     'type' = 'Collection',
     'links' = c(link_items, link_list),
     "title" = theme_title,
