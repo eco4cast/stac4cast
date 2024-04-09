@@ -36,9 +36,9 @@ build_group_variables <- function(table_schema,
                                   thumbnail_link,
                                   thumbnail_title,
                                   group_var_vector,
-                                  group_sites,
-                                  citation_values,
-                                  doi_values
+                                  group_sites #,
+                                  #citation_values,
+                                  #doi_values
 ){
 
   aws_asset_link <-  paste0('"',"s3://anonymous@",
@@ -71,7 +71,7 @@ build_group_variables <- function(table_schema,
     'type' = 'Collection',
     "sci:doi" = catalog_config$citation_doi,
     #"sci:publications": stac4cast::build_publication_items(theme_doi, theme_citation),
-    "sci:publications" = build_publication_items(citation_values, doi_values),
+    #"sci:publications" = build_publication_items(citation_values, doi_values),
     'links' = c(group_var_items,#generate_group_variable_items(variables = group_var_values)
                 list(
                   list(
