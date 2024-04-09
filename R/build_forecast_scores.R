@@ -72,7 +72,8 @@ build_forecast_scores <- function(table_schema,
     ),
       list(
         "rel" = "cite-as",
-        "href" = catalog_config$citation_doi_link
+        #"href" = catalog_config$citation_doi_link
+        "href" = catalog_config$citation_doi
       ),
       list(
         "rel" = "about",
@@ -112,7 +113,8 @@ build_forecast_scores <- function(table_schema,
       ),
         list(
           "rel" = "cite-as",
-          "href" = catalog_config$citation_doi_link
+          #"href" = catalog_config$citation_doi_link
+          "href" = catalog_config$citation_doi
         ),
         list(
           "rel" = "about",
