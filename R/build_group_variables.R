@@ -36,7 +36,9 @@ build_group_variables <- function(table_schema,
                                   thumbnail_link,
                                   thumbnail_title,
                                   group_var_vector,
-                                  group_sites
+                                  group_sites,
+                                  citation_values,
+                                  doi_values
 ){
 
   aws_asset_link <-  paste0('"',"s3://anonymous@",
@@ -67,6 +69,9 @@ build_group_variables <- function(table_schema,
                             "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
                             "https://stac-extensions.github.io/table/v1.2.0/schema.json"),
     'type' = 'Collection',
+    "sci:doi" = catalog_config$citation_doi,
+    #"sci:publications": stac4cast::build_publication_items(theme_doi, theme_citation),
+    "sci:publications" = build_publication_items(citation_values, doi_values),
     'links' = c(group_var_items,#generate_group_variable_items(variables = group_var_values)
                 list(
                   list(
@@ -86,7 +91,7 @@ build_group_variables <- function(table_schema,
                   ),
                   list(
                     "rel" = "cite-as",
-                    "href" = catalog_config$citation_doi
+                    "href" = catalog_config$citation_doi_link
                   ),
                   list(
                     "rel" = "about",
