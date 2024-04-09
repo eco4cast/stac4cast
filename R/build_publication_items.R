@@ -15,7 +15,7 @@ build_publication_items <- function(var_citation, var_doi){
   doi_list <- c(catalog_config$citation_doi)
   citation_list <- c(catalog_config$citation_text)
 
-  if(length(theme_doi) != 0){
+  if(length(var_doi) != 0){
     doi_list <- append(doi_list, var_doi)
     citation_list <- append(citation_list, var_citation)
   }
