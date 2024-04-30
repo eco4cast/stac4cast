@@ -10,7 +10,9 @@ get_site_coords <- function(site_metadata, sites){
 
   site_df <- readr::read_csv(site_metadata, col_types = cols())
 
-  site_lat_lon <- lapply(sites, function(i) c(site_df$longitude[which(site_df[,2] == i)], site_df$latitude[which(site_df[,2] == i)]))
+  relevant_sites <- sites[which(sites %in% site_df$field_site_id)]
+
+  site_lat_lon <- lapply(relevant_sites, function(i) c(site_df$longitude[which(site_df[,2] == i)], site_df$latitude[which(site_df[,2] == i)]))
 
   return(site_lat_lon)
 }
