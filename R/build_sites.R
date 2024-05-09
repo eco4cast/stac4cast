@@ -18,8 +18,8 @@
 #'
 build_sites <- function(table_schema,
                           table_description,
-                          #start_date,
-                          #end_date,
+                          start_date,
+                          end_date,
                           id_value,
                           description_string,
                           about_string,
@@ -96,8 +96,8 @@ build_sites <- function(table_schema,
                            as.numeric(catalog_config$bbox$max_lat)))),
       "temporal" = list(
         'interval' = list(list(
-          paste0('pending',"T00:00:00Z"),
-          paste0('pending',"T00:00:00Z"))
+          paste0(start_date,"T00:00:00Z"),
+          paste0(end_date,"T00:00:00Z"))
         ))
     ),
     "table:columns" = stac4cast::build_table_columns_full_bucket(table_schema, table_description, s3_schema_build = FALSE),
