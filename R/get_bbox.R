@@ -12,14 +12,6 @@ get_bbox <-function(site_metadata, sites){
 
   if (!is.null(sites)){
 
-    # site_lat <- site_df |>
-    #   filter(field_site_id %in% (sites)) |>
-    #   select(latitude)
-    #
-    # site_lon <- site_df |>
-    #   filter(field_site_id %in% (sites)) |>
-    #   select(longitude)
-
     if ('site_id' %in% names(site_df) == FALSE){
       site_df <- site_df |>
         rename(site_id = field_site_id) ## rename the neon site_id column
