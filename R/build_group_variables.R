@@ -70,7 +70,7 @@ build_group_variables <- function(table_schema,
                             "https://stac-extensions.github.io/table/v1.2.0/schema.json"),
     'type' = 'Collection',
     "sci:doi" = catalog_config$citation_doi,
-    "sci:publications": stac4cast::build_publication_items(citation_values, doi_values),
+    "sci:publications" = stac4cast::build_publication_items(citation_values, doi_values),
     'links' = c(group_var_items,#generate_group_variable_items(variables = group_var_values)
                 list(
                   list(
