@@ -109,7 +109,7 @@ build_group_variables <- function(table_schema,
     "extent" = list(
       "spatial" = list(
         #'bbox' = list(list(stac4cast::get_bbox(site_metadata = catalog_config$site_metadata_url, sites = group_sites)))),
-        'bbox' = list(stac4cast::get_bbox(site_metadata = catalog_config$site_metadata_url, sites = group_sites))),
+        'bbox' = stac4cast::get_bbox(site_metadata = catalog_config$site_metadata_url, sites = group_sites)),
       "temporal" = list(
         'interval' = list(list(
           paste0(start_date,"T00:00:00Z"),
