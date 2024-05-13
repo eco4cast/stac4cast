@@ -71,6 +71,7 @@ build_group_variables <- function(table_schema,
     'type' = 'Collection',
     "sci:doi" = catalog_config$citation_doi,
     "sci:publications" = stac4cast::build_publication_items(citation_values, doi_values),
+    #"sci:publications" = NULL,
     'links' = c(group_var_items,#generate_group_variable_items(variables = group_var_values)
                 list(
                   list(
@@ -109,7 +110,7 @@ build_group_variables <- function(table_schema,
     "extent" = list(
       "spatial" = list(
         #'bbox' = list(list(stac4cast::get_bbox(site_metadata = catalog_config$site_metadata_url, sites = group_sites)))),
-        'bbox' = stac4cast::get_bbox(site_metadata = catalog_config$site_metadata_url, sites = group_sites)),
+        'bbox' = list(stac4cast::get_bbox(site_metadata = catalog_config$site_metadata_url, sites = group_sites))),
       "temporal" = list(
         'interval' = list(list(
           paste0(start_date,"T00:00:00Z"),
