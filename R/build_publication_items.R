@@ -12,7 +12,7 @@
 
 build_publication_items <- function(var_citation, var_doi){
 
-  if (is.null(var_citation) ! is.null(var_doi)){
+  if (is.null(var_citation) | is.null(var_doi)){
     return(NULL)
   }else{
   doi_list <- c(catalog_config$citation_doi)
