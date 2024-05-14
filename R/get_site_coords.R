@@ -10,9 +10,15 @@ get_site_coords <- function(site_metadata, sites){
 
   site_df <- readr::read_csv(site_metadata, col_types = cols())
 
-  relevant_sites <- sites[which(sites %in% site_df$field_site_id)]
+  if ('site_id' %in% names(site_df) == FALSE){
+    site_df <- site_df |>
+      rename(site_id = field_site_id) ## rename the neon site_id column
+  }
 
-  site_lat_lon <- lapply(relevant_sites, function(i) c(site_df$longitude[which(site_df[,2] == i)], site_df$latitude[which(site_df[,2] == i)]))
+  relevant_sites <- sites[which(sites %in% site_df$site_id)]
+
+  site_lat_lon <- lapply(relevant_sites, function(i){c(site_df$longitude[which(site_df$site_id == i)],
+                                                       site_df$latitude[which(site_df$site_id == i)])})
 
   return(site_lat_lon)
 }
