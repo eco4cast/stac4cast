@@ -19,18 +19,18 @@
 #'@export
 #'
 build_targets <- function(table_schema,
-                            table_description,
-                            start_date,
-                            end_date,
-                            id_value,
-                            description_string,
-                            about_string,
-                            about_title,
-                            theme_title,
-                            destination_path,
-                            link_items,
-                            thumbnail_link,
-                            thumbnail_title
+                          table_description,
+                          start_date,
+                          end_date,
+                          id_value,
+                          description_string,
+                          about_string,
+                          about_title,
+                          theme_title,
+                          destination_path,
+                          link_items,
+                          thumbnail_link,
+                          thumbnail_title
 ){
 
   # insitu_targets_link <- config$insitu_targets_file
