@@ -19,6 +19,7 @@
 #' @export
 #'
 build_model <- function(model_id,
+                        stac_id,
                         team_name,
                         model_description,
                         start_date,
@@ -60,7 +61,7 @@ build_model <- function(model_id,
     "stac_version"= "1.0.0",
     "stac_extensions"= list('https://stac-extensions.github.io/table/v1.2.0/schema.json'),
     "type"= "Feature",
-    "id"= model_id,
+    "id"= stac_id,
     "bbox"= list(stac4cast::get_bbox(site_metadata = site_table, sites = site_values)),
     "geometry"= list(
       "type"= catalog_config$site_type,
