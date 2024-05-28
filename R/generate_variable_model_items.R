@@ -13,7 +13,7 @@ generate_variable_model_items <- function(model_list){
     list(
       "rel" = 'item',
       'type'= 'application/json',
-      'href' = paste0('../../models/model_items/',i,'.json'))
+      'href' = paste0('./models/',i,'.json'))
   )
 
   return(x)
