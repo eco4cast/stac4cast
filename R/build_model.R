@@ -68,6 +68,7 @@ build_model <- function(model_id,
       "coordinates"=  stac4cast::get_site_coords(site_metadata = site_table, sites = site_values)
     ),
     "properties"= list(
+      "title" = model_id,
       #'description' = model_description,
       "description" = glue::glue('
 
