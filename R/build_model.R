@@ -69,15 +69,15 @@ build_model <- function(model_id,
     ),
     "properties"= list(
       "title" = model_id,
-      #'description' = model_description,
-      "description" = glue::glue('
-
-    model info: {model_description}
-
-    Sites: {site_reformat}
-
-    Variables: {variables_string}
-'),
+      description = model_description,
+#       "description" = glue::glue('
+#
+#     model info: {model_description}
+#
+#     Sites: {site_reformat}
+#
+#     Variables: {variables_string}
+# '),
       "start_datetime" = start_date,
       "end_datetime" = end_date,
       "providers"= c(stac4cast::generate_authors(metadata_table = model_documentation),list(
