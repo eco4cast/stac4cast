@@ -81,7 +81,7 @@ build_model <- function(model_id,
 # '),
       "start_datetime" = start_date,
       "end_datetime" = end_date,
-      "providers"= c(stac4cast::generate_authors(metadata_table = model_documentation),list(
+      "providers"= c(stac4cast::generate_authors(model = model_id, metadata_table = model_documentation),list(
         list(
           "url"= catalog_config$host_url,
           "name"= catalog_config$host_name,
