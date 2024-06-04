@@ -4,12 +4,27 @@
 #'
 #' @export
 #'
-generate_authors <- function(metadata_table){
+generate_authors <- function(model, metadata_table){
+
+  model_info <- metadata_table |>
+    filter(model_id == model)
+
+  if (model_info$`Can we publicly list your name and email as part of the model metadata?` == 'Yes'){
+
+    url_info <- model_info$`Contact email`
+    name_info <- model_info$`Contact name`
+
+    x <- list(list('url' = url_info,
+                   'name' = name_info,
+                   'roles' = list("producer",
+                                  "processor",
+                                  "licensor")))
+  }else{
 
   x <- list(list('url' = 'pending',
                  'name' = 'pending',
                  'roles' = list("producer",
                                 "processor",
-                                "licensor"))
-  )
+                                "licensor")))
+  }
 }
