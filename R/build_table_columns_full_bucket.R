@@ -35,5 +35,9 @@ if (s3_schema_build == TRUE){
       description = description_df[1,names(data_object)[i]])
   )
 
+}
+  ## check if first item is empty (current problem with json)
+  if (is.null(init_list[[1]]$type)){
+    init_list <- init_list[-1]
   }
 }
