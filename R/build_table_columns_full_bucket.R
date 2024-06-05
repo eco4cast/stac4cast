@@ -24,11 +24,11 @@ if (s3_schema_build == TRUE){
     init_list[[i]] <- col_list
 
   }
-  return(init_list)
+  #return(init_list)
 
 } else if (s3_schema_build == FALSE){
 
-  col_list <- purrr::map(1:ncol(data_object), function(i)
+  init_list <- purrr::map(1:ncol(data_object), function(i)
     list(
       name = names(data_object)[i],
       type = sapply(data_object,class)[[i]],
@@ -40,4 +40,6 @@ if (s3_schema_build == TRUE){
   if (is.null(init_list[[1]]$type)){
     init_list <- init_list[-1]
   }
+
+return(init_list)
 }
