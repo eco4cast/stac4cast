@@ -9,7 +9,15 @@ generate_authors <- function(model, metadata_table){
   model_info <- metadata_table |>
     filter(model_id == model)
 
-  if (model_info$`Can we publicly list your name and email as part of the model metadata?` == 'Yes'){
+  if (is.na(model_info$`Can we publicly list your name and email as part of the model metadata?`)){
+
+    x <- list(list('url' = 'pending',
+                   'name' = 'pending',
+                   'roles' = list("producer",
+                                  "processor",
+                                  "licensor")))
+
+  }else if (model_info$`Can we publicly list your name and email as part of the model metadata?` == 'Yes'){
 
     url_info <- model_info$`Contact email`
     name_info <- model_info$`Contact name`
@@ -19,13 +27,7 @@ generate_authors <- function(model, metadata_table){
                    'roles' = list("producer",
                                   "processor",
                                   "licensor")))
-  }else if (is.na(model_info$`Can we publicly list your name and email as part of the model metadata?`)){
 
-  x <- list(list('url' = 'pending',
-                 'name' = 'pending',
-                 'roles' = list("producer",
-                                "processor",
-                                "licensor")))
   }else{
     x <- list(list('url' = 'pending',
                    'name' = 'pending',
