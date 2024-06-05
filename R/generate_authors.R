@@ -19,12 +19,18 @@ generate_authors <- function(model, metadata_table){
                    'roles' = list("producer",
                                   "processor",
                                   "licensor")))
-  }else{
+  }else if (is.na(model_info$`Can we publicly list your name and email as part of the model metadata?`)){
 
   x <- list(list('url' = 'pending',
                  'name' = 'pending',
                  'roles' = list("producer",
                                 "processor",
                                 "licensor")))
+  }else{
+    x <- list(list('url' = 'pending',
+                   'name' = 'pending',
+                   'roles' = list("producer",
+                                  "processor",
+                                  "licensor")))
   }
 }
