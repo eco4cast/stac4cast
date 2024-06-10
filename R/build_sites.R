@@ -41,7 +41,7 @@ build_sites <- function(table_schema,
   # inflow_targets_asset_description <- paste0("This R code will return results for the relevant targets file.\n\n### R\n\n```{r}\n# Use code below\n\nurl <- ",inflow_targets_link,
   #                                            "\ntargets <- readr::read_csv(url, show_col_types = FALSE)\n```")
   #
-  site_asset_description <- paste0("This R code will return results for the site metadata.\n\n### R\n\n```{r}\n# Use code below\n\nurl <- ",config$site_table_link,
+  site_asset_description <- paste0("This R code will return results for the site metadata.\n\n### R\n\n```{r}\n# Use code below\n\nurl <- ",'"',config$site_table_link,'"',
                                           "\nsites <- readr::read_csv(url, show_col_types = FALSE)\n```")
 
   forecast_score <- list(
