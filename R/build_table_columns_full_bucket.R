@@ -37,7 +37,8 @@ if (s3_schema_build == TRUE){
 
 }
   ## check if first item is empty (current problem with json)
-  if (is.null(init_list[[1]]$type)){
+  if (is.null(init_list[[1]]$type) | is.na(init_list[[1]]$type)){
+    warning('null value found in column table build')
     init_list <- init_list[-1]
   }
 
