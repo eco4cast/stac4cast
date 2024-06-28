@@ -36,27 +36,45 @@ build_group_variables <- function(table_schema,
                                   thumbnail_link,
                                   thumbnail_title,
                                   group_var_vector,
+                                  group_duration_value,
                                   group_sites,
                                   citation_values,
                                   doi_values
 ){
 
-  aws_asset_link <-  paste0('"',"s3://anonymous@",
+  if (is.null(group_var_vector)){
+
+    aws_asset_link <-  paste0('"',"s3://anonymous@",
+                              aws_download_path,
+                              "/project_id=", config$project_id,
+                              "/duration=", group_duration_value,
+                              "/variable=", full_var_df$variable,
+                              "?endpoint_override=",config$endpoint,'"')
+
+    aws_href_link <- paste0('"',"s3://anonymous@",
                             aws_download_path,
-                            #"/model_id=", model_id,
+                            "/project_id=", config$project_id,
+                            "/duration=", duration_value,
+                            "/variable=", full_var_df$variable,
                             "?endpoint_override=",config$endpoint,'"')
 
-  aws_href_link <- paste0("s3://anonymous@",
-                          aws_download_path,
-                          #"/model_id=", model_id,
-                          "?endpoint_override=",config$endpoint)
-
-  if (is.null(group_var_vector)){
     aws_asset_description <- paste0("Use `arrow` for remote access to the database. This R code will return results for forecasts of the variable by the specific model .\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",aws_asset_link,")\ndf <- all_results |> dplyr::collect()\n\n```
        \n\nYou can use dplyr operations before calling `dplyr::collect()` to `summarise`, `select` columns, and/or `filter` rows prior to pulling the data into a local `data.frame`. Reducing the data that is pulled locally will speed up the data download speed and reduce your memory usage.\n\n\n")
-  }else{
-  group_var_vector <- paste0('"', paste(group_var_vector, collapse='", "'), '"')
-  aws_asset_description <- paste0("Use `arrow` for remote access to the database. This R code will return results for the NEON Ecological Forecasting Aquatics theme.\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",aws_asset_link,")\ndf <- all_results |>\n dplyr::filter(variable %in% c(", group_var_vector,")) |>\n dplyr::collect()\n\n```
+
+    }else{
+
+      aws_asset_link <-  paste0('"',"s3://anonymous@",
+                              aws_download_path,
+                              #"/model_id=", model_id,
+                              "?endpoint_override=",config$endpoint,'"')
+
+    aws_href_link <- paste0("s3://anonymous@",
+                            aws_download_path,
+                            #"/model_id=", model_id,
+                            "?endpoint_override=",config$endpoint)
+
+    group_var_vector <- paste0('"', paste(group_var_vector, collapse='", "'), '"')
+    aws_asset_description <- paste0("Use `arrow` for remote access to the database. This R code will return results for the NEON Ecological Forecasting Aquatics theme.\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",aws_asset_link,")\ndf <- all_results |>\n dplyr::filter(variable %in% c(", group_var_vector,")) |>\n dplyr::collect()\n\n```
        \n\nYou can use dplyr operations before calling `dplyr::collect()` to `summarise`, `select` columns, and/or `filter` rows prior to pulling the data into a local `data.frame`. Reducing the data that is pulled locally will speed up the data download speed and reduce your memory usage.\n\n\n")
   }
 
