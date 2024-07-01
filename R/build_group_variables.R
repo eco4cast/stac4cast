@@ -36,6 +36,7 @@ build_group_variables <- function(table_schema,
                                   thumbnail_link,
                                   thumbnail_title,
                                   group_var_vector,
+                                  single_var_name,
                                   group_duration_value,
                                   group_sites,
                                   citation_values,
@@ -48,14 +49,14 @@ build_group_variables <- function(table_schema,
                               aws_download_path,
                               "/project_id=", config$project_id,
                               "/duration=", group_duration_value,
-                              "/variable=", full_var_df$variable,
+                              "/variable=", single_var_name,
                               "?endpoint_override=",config$endpoint,'"')
 
     aws_href_link <- paste0('"',"s3://anonymous@",
                             aws_download_path,
                             "/project_id=", config$project_id,
                             "/duration=", duration_value,
-                            "/variable=", full_var_df$variable,
+                            "/variable=", single_var_name,
                             "?endpoint_override=",config$endpoint,'"')
 
     aws_asset_description <- paste0("Use `arrow` for remote access to the database. This R code will return results for forecasts of the variable by the specific model .\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",aws_asset_link,")\ndf <- all_results |> dplyr::collect()\n\n```
