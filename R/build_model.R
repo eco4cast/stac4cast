@@ -70,7 +70,8 @@ build_model <- function(model_id,
     "stac_extensions"= list('https://stac-extensions.github.io/table/v1.2.0/schema.json'),
     "type"= "Feature",
     "id"= stac_id,
-    "bbox"= list(stac4cast::get_bbox(site_metadata = site_table, sites = site_values)),
+    #"bbox"= list(stac4cast::get_bbox(site_metadata = site_table, sites = site_values)),
+    "bbox"= stac4cast::get_bbox(site_metadata = site_table, sites = site_values),
     "geometry"= list(
       "type"= catalog_config$site_type,
       "coordinates"=  stac4cast::get_site_coords(site_metadata = site_table, sites = site_values)
