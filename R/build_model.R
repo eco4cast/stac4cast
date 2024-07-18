@@ -46,6 +46,11 @@ build_model <- function(model_id,
   #variables_reformat <- as.list(var_values)
   site_reformat <- paste(site_values, collapse = ", ")
 
+  ## manipulate dates to match STAC format
+  start_date <- paste0(start_date,"T00:00:00Z")
+  end_date <- paste0(end_date,"T00:00:00Z")
+
+
   aws_asset_link <- paste0('"',"s3://anonymous@",
                            aws_download_path,
                            "/project_id=", config$project_id,

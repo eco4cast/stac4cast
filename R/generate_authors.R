@@ -19,7 +19,8 @@ generate_authors <- function(model, metadata_table){
 
   }else if (model_info$`Can we publicly list your name and email as part of the model metadata?` == 'Yes'){
 
-    url_info <- model_info$`Contact email`
+    #url_info <- model_info$`Contact email`
+    url_info <- model_info$`Web link to model code`
     name_info <- model_info$`Contact name`
 
     x <- list(list('url' = url_info,
