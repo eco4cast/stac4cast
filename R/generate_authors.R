@@ -11,8 +11,8 @@ generate_authors <- function(model, metadata_table){
 
   if (is.na(model_info$`Can we publicly list your name and email as part of the model metadata?`)){
 
-    x <- list(list('url' = 'pending',
-                   'name' = 'pending',
+    x <- list(list('url' = 'https://projects.ecoforecast.org/neon4cast-ci/',
+                   'name' = 'NEON Ecological Forecasting Project',
                    'roles' = list("producer",
                                   "processor",
                                   "licensor")))
@@ -30,8 +30,8 @@ generate_authors <- function(model, metadata_table){
                                   "licensor")))
 
   }else{
-    x <- list(list('url' = 'pending',
-                   'name' = 'pending',
+    x <- list(list('url' = 'https://projects.ecoforecast.org/neon4cast-ci/',
+                   'name' = 'NEON Ecological Forecasting Project',
                    'roles' = list("producer",
                                   "processor",
                                   "licensor")))
