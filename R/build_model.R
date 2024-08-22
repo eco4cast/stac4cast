@@ -38,7 +38,9 @@ build_model <- function(model_id,
                         table_description,
                         full_var_df,
                         code_web_link,
-                        model_keywords) {
+                        model_keywords,
+                        stac_web_link,
+                        raw_json_link) {
 
 
   preset_keywords <- list("Forecasting", config$project_id)
@@ -49,7 +51,8 @@ build_model <- function(model_id,
   ## manipulate dates to match STAC format
   start_date <- paste0(start_date,"T00:00:00Z")
   end_date <- paste0(end_date,"T00:00:00Z")
-  curent_date <- paste0(Sys.Date(), "T00:00:00Z")
+  current_date <- paste0(Sys.Date(), "T00:00:00Z")
+  empty_date <- noquote('null')
 
 
   aws_asset_link <- paste0('"',"s3://anonymous@",
@@ -85,7 +88,7 @@ build_model <- function(model_id,
     "properties"= list(
       "title" = model_id,
       description = model_description,
-      "datetime" = curent_date,
+      "datetime" = current_date,
       "start_datetime" = start_date,
       "end_datetime" = end_date,
       "providers"= c(stac4cast::generate_authors(model = model_id, metadata_table = model_documentation),list(
@@ -134,7 +137,19 @@ build_model <- function(model_id,
         "href" = code_web_link,
         "type"= "text/html",
         "title"= "Link for Model Code"
-        )),
+        ),
+      list(
+        "rel"= "item",
+        "href" = stac_web_link,
+        "type"= "text/html",
+        "title"= "Link for rendered STAC item"
+      ),
+      list(
+        "rel"= "item",
+        "href" = raw_json_link,
+        "type"= "text/html",
+        "title"= "Link for raw JSON file"
+      )),
     "assets"= stac4cast::generate_model_assets(full_var_df, aws_download_path, code_web_link)#,
     #pull_images(theme_id,model_id,thumbnail_image_name)
   )
