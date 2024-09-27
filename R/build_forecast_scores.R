@@ -39,11 +39,13 @@ build_forecast_scores <- function(table_schema,
 
   aws_asset_link <- paste0('"',"s3://anonymous@",
                            aws_download_path,
+                           "/project_id=", config$project_id,
                            #"/model_id=", model_id,
                            "?endpoint_override=",config$endpoint,'"')
 
   aws_href_link <- paste0("s3://anonymous@",
                            aws_download_path,
+                          "/project_id=", config$project_id,
                            #"/model_id=", model_id,
                            "?endpoint_override=",config$endpoint)
 
