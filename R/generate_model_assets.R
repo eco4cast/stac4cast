@@ -36,14 +36,31 @@ generate_model_assets <- function(full_var_df, aws_path, model_code_link){
                       "/variable=", full_var_df$variable[i],
                       "/model_id=", m,
                       "?endpoint_override=",config$endpoint),
-      'description' = paste0("Use `arrow` for remote access to the database. This R code will return results for this variable and model combination.\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",paste0('"',"s3://anonymous@",
+      'description' = paste0("Use `R` or `Python` code for remote access to the database. This code will return results for this variable and model combination.\n\n### R\n\n```{r}\n# Use code below\n\nall_results <- arrow::open_dataset(",paste0('"',"s3://anonymous@",
                                                                                                                                                                                                                                           aws_path,
                                                                                                                                                                                                                                           "/project_id=", full_var_df$project_id[i],
                                                                                                                                                                                                                                           "/duration=", full_var_df$duration[i],
                                                                                                                                                                                                                                           "/variable=", full_var_df$variable[i],
                                                                                                                                                                                                                                           "/model_id=", m,
                                                                                                                                                                                                                                           "?endpoint_override=",config$endpoint,'"'),")\ndf <- all_results |> dplyr::collect()\n\n```
-       \n\nYou can use dplyr operations before calling `dplyr::collect()` to `summarise`, `select` columns, and/or `filter` rows prior to pulling the data into a local `data.frame`. Reducing the data that is pulled locally will speed up the data download speed and reduce your memory usage.\n\n\n")
+       \n\nYou can use dplyr operations before calling `dplyr::collect()` to `summarise`, `select` columns, and/or `filter` rows prior to pulling the data into a local `data.frame`. Reducing the data that is pulled locally will speed up the data download speed and reduce your memory usage.\n\n\n### Python\n\n```
+                             {python}\n# Use code below\n\nall_results\n\nimport ibis\n
+                             con = ibis.duckdbf.connect()\n\n
+                             con.raw_sql(f'''\n
+                             CREATE OR REPLACE SECRET secret (\n
+                             TYPE S3,\n
+                             ENDPOINT '",config$endpoint,"',\n
+                             URL_STYLE 'path'\n\n
+                             );/n
+                             '''\n\n
+                             path = ",
+                             paste0('"',"s3://",
+                                    aws_path,
+                                    "/project_id=", full_var_df$project_id[i],
+                                    "/duration=", full_var_df$duration[i],
+                                    "/variable=", full_var_df$variable[i],
+                                    "/model_id=", m,'"'),
+                             "\ncon.read_parquet(path + "/**")")
     )
   )
 
