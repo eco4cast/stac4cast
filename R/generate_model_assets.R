@@ -60,7 +60,7 @@ generate_model_assets <- function(full_var_df, aws_path, model_code_link){
                                     "/duration=", full_var_df$duration[i],
                                     "/variable=", full_var_df$variable[i],
                                     "/model_id=", m,'"'),
-                             "\ncon.read_parquet(path + "/**")")
+                             "\ncon.read_parquet(path + \"/**\")")
     )
   )
 
