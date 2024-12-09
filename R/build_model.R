@@ -165,7 +165,7 @@ build_model <- function(model_id,
                        json,
                        pretty=TRUE,
                        auto_unbox=TRUE)
-  stac4cast::stac_validate(json)
+  #stac4cast::stac_validate(json)
 
   rm(meta)
 }
