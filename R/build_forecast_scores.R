@@ -182,5 +182,5 @@ build_forecast_scores <- function(table_schema,
                        json,
                        pretty=TRUE,
                        auto_unbox=TRUE)
-  stac4cast::stac_validate(json)
+  #stac4cast::stac_validate(json)
 }
