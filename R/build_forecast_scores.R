@@ -150,8 +150,8 @@ build_forecast_scores <- function(table_schema,
         'bbox' = list(stac4cast::get_bbox(site_metadata = catalog_config$site_metadata_url, sites = group_sites))),
       "temporal" = list(
         'interval' = list(list(
-          paste0(start_date,"T00:00:00Z"),
-          paste0(end_date,"T00:00:00Z"))
+          paste0(as.Date(start_date),"T00:00:00Z"),
+          paste0(as.Date(end_date),"T00:00:00Z"))
         ))
     ),
     "table:columns" = stac4cast::build_table_columns_full_bucket(table_schema, table_description),
