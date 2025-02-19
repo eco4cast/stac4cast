@@ -50,8 +50,8 @@ generate_model_assets <- function(full_var_df, aws_path, model_code_link){
        TYPE S3,\n
        ENDPOINT '",config$endpoint,"',\n
        URL_STYLE 'path'\n\n
-       );/n
-       '''\n\n
+       ''');
+       \n\n
        path = ",
        paste0('"',"s3://",
        aws_path,
