@@ -153,7 +153,7 @@ build_model <- function(model_id,
         "type"= "text/html",
         "title"= "Link for raw JSON file"
       )),
-    "assets"= stac4cast::generate_model_assets(full_var_df, aws_download_path, code_web_link)#,
+    "assets"= stac4cast::generate_model_assets(full_var_df, aws_download_path, code_web_link, site_reformat)#,
     #pull_images(theme_id,model_id,thumbnail_image_name)
   )
 

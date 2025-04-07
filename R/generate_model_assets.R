@@ -5,7 +5,7 @@
 #' @export
 #'
 #'
-generate_model_assets <- function(full_var_df, aws_path, model_code_link){
+generate_model_assets <- function(full_var_df, aws_path, model_code_link, site_values){
 
   metadata_json_asset <- list(
     "1"= list(
@@ -20,6 +20,12 @@ generate_model_assets <- function(full_var_df, aws_path, model_code_link){
       'title' = 'Link for Model Code',
       'href' = model_code_link,
       'description' = "The link to the model code provided by the model submission team"
+    ),
+    "3" = list(
+      'type'= 'text/plain',
+      'title' = 'Model Sites',
+      'href' = site_values,
+      'description' = "Sites where the model predicts this variable"
     )
   )
 
