@@ -24,8 +24,8 @@ generate_model_assets <- function(full_var_df, aws_path, model_code_link, site_v
     "3" = list(
       'type'= 'text/plain',
       'title' = 'Model Sites',
-      'href' = site_values,
-      'description' = "Sites where the model predicts this variable"
+      'href' = NULL,
+      'description' = site_values
     )
   )
 
