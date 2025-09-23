@@ -33,19 +33,6 @@ build_targets <- function(table_schema,
                           thumbnail_title
 ){
 
-  # insitu_targets_link <- config$insitu_targets_file
-  # inflow_targets_link <- config$inflow_targets_file
-  # met_targets_link <- config$met_targets_file
-  #
-  # insitu_targets_asset_description <- paste0("This R code will return results for the relevant targets file.\n\n### R\n\n```{r}\n# Use code below\n\nurl <- ",insitu_targets_link,
-  #                                     "\ntargets <- readr::read_csv(url, show_col_types = FALSE)\n```")
-  #
-  # inflow_targets_asset_description <- paste0("This R code will return results for the relevant targets file.\n\n### R\n\n```{r}\n# Use code below\n\nurl <- ",inflow_targets_link,
-  #                                            "\ntargets <- readr::read_csv(url, show_col_types = FALSE)\n```")
-  #
-  # met_targets_asset_description <- paste0("This R code will return results for the relevant targets file.\n\n### R\n\n```{r}\n# Use code below\n\nurl <- ",met_targets_link,
-  #                                            "\ntargets <- readr::read_csv(url, show_col_types = FALSE)\n```")
-
   forecast_score <- list(
     "id" = id_value,
     "description" = description_string,
@@ -55,7 +42,7 @@ build_targets <- function(table_schema,
                             "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
                             "https://stac-extensions.github.io/table/v1.2.0/schema.json"),
     'type' = 'Collection',
-    'links' = c(link_items, #generate_model_items()
+    'links' = c(link_items,
                 list(
                   list(
                     "rel" = "parent",
@@ -106,40 +93,10 @@ build_targets <- function(table_schema,
     #"table:columns" = build_table_columns_full_bucket(table_schema, table_description),
 
     'assets' = generate_target_assets(target_groups = config$target_groups, thumbnail_link = thumbnail_link, thumbnail_title = thumbnail_title)
-
-    # 'assets' = list(
-    #   'data' = list(
-    #     "href" = insitu_targets_link,
-    #     "type"= "application/x-parquet",
-    #     "title"= 'Insitu Targets Access',
-    #     "roles" = list('data'),
-    #     "description"= insitu_targets_asset_description
-    #   ),
-    #   'data' = list(
-    #     "href" = inflow_targets_link,
-    #     "type"= "application/x-parquet",
-    #     "title"= 'Inflow Targets Access',
-    #     "roles" = list('data'),
-    #     "description"= inflow_targets_asset_description
-    #   ),
-    #   'data' = list(
-    #     "href" = met_targets_link,
-    #     "type"= "application/x-parquet",
-    #     "title"= 'Meteorology Targets Access',
-    #     "roles" = list('data'),
-    #     "description"= met_targets_asset_description
-    #   ),
-    #   'thumbnail' = list(
-    #     "href"= thumbnail_link,
-    #     "type"= "image/JPEG",
-    #     "roles" = list('thumbnail'),
-    #     "title"= thumbnail_title
-    #   )
-    # )
   )
 
 
-  dest <- destination_path
+  dest <- paste0("../", destination_path)
   json <- file.path(dest, "collection.json")
 
   jsonlite::write_json(forecast_score,

@@ -158,7 +158,7 @@ build_model <- function(model_id,
   )
 
 
-  dest <- destination_path
+  dest <- paste0("../", destination_path)
   json <- file.path(dest, paste0(model_id, ".json"))
 
   jsonlite::write_json(meta,
