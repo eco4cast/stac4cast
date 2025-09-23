@@ -175,7 +175,7 @@ build_forecast_scores <- function(table_schema,
   )
 
 
-  dest <- destination_path
+  dest <- paste0("../",destination_path)
   json <- file.path(dest, "collection.json")
 
   jsonlite::write_json(forecast_score,
