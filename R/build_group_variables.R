@@ -120,7 +120,7 @@ build_group_variables <- function(table_schema,
       #"table:columns" = build_table_columns_full_bucket(table_schema, table_description),
       'assets' = list(
         'data' = list(
-          "href" = aws_href_link,
+          "href" = aws_asset_link,
           "type"= "application/x-parquet",
           "title"= 'Database Access',
           "roles" = list('data'),
