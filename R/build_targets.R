@@ -61,7 +61,7 @@ build_targets <- function(table_schema,
                   ),
                   list(
                     "rel" = "cite-as",
-                    "href" = catalog_config$citation_doi
+                    "href" = catalog_config$citation_doi_link
                   ),
                   list(
                     "rel" = "about",
