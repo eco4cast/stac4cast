@@ -24,7 +24,7 @@ generate_model_assets <- function(full_var_df, aws_path, model_code_link, site_v
     "3" = list(
       'type'= 'text/plain',
       'title' = 'Model Sites',
-      'href' = config$site_table_link,
+      'href' = config$catalog_config$site_metadata_url,
       'description' = site_values
     )
   )
