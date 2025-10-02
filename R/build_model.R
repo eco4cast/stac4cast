@@ -90,8 +90,8 @@ build_model <- function(model_id,
     "properties"= list(
       "title" = model_id,
       description = model_description,
-      "datetime" = forecast_date,
-      "updated" = pub_date,
+      "datetime" = paste0(forecast_date,"T00:00:00Z"),
+      "updated" = paste0(pub_date,"T00:00:00Z"),
       "start_datetime" = start_date,
       "end_datetime" = end_date,
       "providers"= c(stac4cast::generate_authors(model = model_id, metadata_table = model_documentation),list(
